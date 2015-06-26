@@ -1,0 +1,9 @@
+env
+.DS_Store
+__pycache__
+migrations
+media
+node_modules/
+.idea/
+*.pyc
+*.sqlite3
