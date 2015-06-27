@@ -40,9 +40,11 @@ DEFAULT_APPS = (
 )
 
 LOCAL_APPS = (
+    'app.article',
 )
 
 THIRD_APPS = (
+    'DjangoUeditor',
 )
 
 INSTALLED_APPS = DEFAULT_APPS + LOCAL_APPS + THIRD_APPS
@@ -103,11 +105,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+# CSRF_FAILURE_VIEW = True
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
