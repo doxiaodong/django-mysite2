@@ -1,8 +1,8 @@
 # coding:utf-8
 
-from django.shortcuts import render
+import simplejson
 from django.core import serializers
-from django.http import JsonResponse, HttpResponseNotAllowed
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 
@@ -13,19 +13,13 @@ def article_category(request):
     if request.method == "POST":
         article_categories = ArticleCategory.objects.all()
 
-        respose_categories = []
-        for category in article_categories:
-            respose_categories.append({
-                'url': category.url,
-                'name': category.name
-            })
-
         respose = {
             'status': 1,
             'msg': '请求成功',
             'data': {
-                # 'article_categories': eval(serializers.serialize('json', article_categories))
-                'article_categories': respose_categories
+                'article_categories': simplejson.loads(
+                    serializers.serialize('json', article_categories, ensure_ascii=False)
+                )
             }
         }
         return JsonResponse(respose)
