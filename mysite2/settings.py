@@ -46,12 +46,14 @@ LOCAL_APPS = (
 THIRD_APPS = (
     'DjangoUeditor',
     'rest_framework',
+    'corsheaders',
 )
 
 INSTALLED_APPS = DEFAULT_APPS + LOCAL_APPS + THIRD_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -59,9 +61,15 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+
 )
 
 ROOT_URLCONF = 'mysite2.urls'
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:7997',
+    'localhost:3000',
+)
 
 TEMPLATES = [
     {
