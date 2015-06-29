@@ -45,6 +45,7 @@ LOCAL_APPS = (
 
 THIRD_APPS = (
     'DjangoUeditor',
+    'rest_framework',
 )
 
 INSTALLED_APPS = DEFAULT_APPS + LOCAL_APPS + THIRD_APPS
@@ -111,8 +112,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'dist'),
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGE_SIZE': 10
+}
