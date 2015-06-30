@@ -25,7 +25,7 @@ SECRET_KEY = '&zpmk=@&vz!a(y0e$v#@sczt^pisebm@82mzyhyg&g@!vldf)o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -67,7 +67,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'mysite2.urls'
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:7997',
+    'local.darlin.me',
     'localhost:3000',
 )
 
@@ -130,3 +130,5 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
     'PAGE_SIZE': 10
 }
+
+SESSION_COOKIE_DOMAIN = 'local.darlin.me'

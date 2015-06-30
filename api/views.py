@@ -14,6 +14,7 @@ def init_homepage(request):
 
     if request.method == "GET":
 
+        request.session['user'] = 'new'
         respose = {
             'status': 1,
             'msg': 'success',
