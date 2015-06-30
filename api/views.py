@@ -15,14 +15,16 @@ def init_homepage(request):
     if request.method == "GET":
 
         request.session['user'] = 'new'
-        respose = {
+        respose = JsonResponse({
             'status': 1,
             'msg': 'success',
             'data': {
                 'csrftoken': get_token(request)
             }
-        }
-        return JsonResponse(respose)
+        })
+        respose['Access-Control-Allow-Credentials'] = 'true'
+
+        return respose
 
 
 class ArticleCategoriesViewSet(viewsets.ReadOnlyModelViewSet):
