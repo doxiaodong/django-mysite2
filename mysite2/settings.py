@@ -41,6 +41,8 @@ DEFAULT_APPS = (
 
 LOCAL_APPS = (
     'app.article',
+    'app.account',
+    'app.comments',
 )
 
 THIRD_APPS = (
@@ -136,3 +138,5 @@ REST_FRAMEWORK = {
 SESSION_COOKIE_DOMAIN = '.darlin.me'
 CSRF_COOKIE_DOMAIN = '.darlin.me'
 # SESSION_COOKIE_DOMAIN = '.localhost:3000'
+
+AUTH_USER_MODEL = 'account.Profile'
