@@ -1,7 +1,8 @@
+# coding:utf-8
+
 from django.conf.urls import patterns, include, url
 from rest_framework import routers
 from . import views, view_set
-
 
 router = routers.DefaultRouter()
 router.register(r'article/categories', view_set.ArticleCategoriesViewSet)
@@ -14,4 +15,6 @@ urlpatterns = [
     url(r'^article/articles/(?P<category>\w+)/$', views.ArticleListDetailView.as_view()),
     url(r'^comment/comments/(?P<article>\w+)/$', views.CommentsDetailView.as_view()),
     url(r'^comment/subcomments/(?P<head>\w+)/$', views.SubCommentsDetailView.as_view()),
+
+    url(r'^account/', include('app.account.urls', namespace='account'))
 ]
