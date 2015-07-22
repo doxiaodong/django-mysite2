@@ -4,6 +4,14 @@ from app.account.models import Profile
 from rest_framework import serializers
 
 
+# user_info
+class UserInfoSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Profile
+        fields = ('username', 'nickname', 'pic')
+
+
 # articles
 class ArticleCategoriesSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -67,3 +75,4 @@ class SubCommentsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = SubComment
         fields = ('head', 'reply_user', 'reply_object', 'content', 'reply_time')
+

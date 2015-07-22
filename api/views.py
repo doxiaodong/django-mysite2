@@ -10,16 +10,31 @@ from .serializers import *
 from rest_framework import viewsets, generics
 
 
+def get_user_info(user):
+    return {
+        'username': user.username,
+        'nickname': user.nickname,
+        'email': user.email,
+        'pic': str(user.pic),
+        'sex': user.sex,
+        'last_login': user.last_login
+    }
+
+
 # Create your views here.
 @ensure_csrf_cookie
 def init_homepage(request):
     if request.method == "GET":
-        request.session['user'] = 'new'
+        user = request.user
+        if user.is_anonymous():
+            info = None
+        else:
+            info = get_user_info(user)
         respose = JsonResponse({
             'status': 1,
             'msg': 'success',
             'data': {
-                'csrftoken': get_token(request)
+                'user': info
             }
         })
         return respose

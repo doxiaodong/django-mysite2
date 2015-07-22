@@ -1,5 +1,6 @@
 # coding:utf-8
 from django.shortcuts import render
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse, HttpResponseNotAllowed
 from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.models import User
@@ -10,6 +11,8 @@ from PIL import Image
 from django.conf import settings
 import os
 from django.utils import timezone
+
+from api.views import get_user_info
 
 import sys
 reload(sys)
@@ -59,16 +62,15 @@ def clip_resize_img(ori_img, dst_w, dst_h):
 # Create your views here.
 def register(request):
     if request.method == "POST":
-        post_data = request['POST']
+        post_data = request.POST
 
         r_username = post_data.get('username', None)
         if Profile.objects.filter(username=r_username):
-            return JsonResponse({'status': False, 'data': {'error': '用户名已经存在'}})
+            return JsonResponse({'status': 0, 'data': {'error': '用户名已经存在'}})
         else:
             r_email = post_data.get('email', None)
             r_password = post_data.get('password', None)
-            r_firstname = post_data.get('firstname', None)
-            r_lastname = post_data.get('lastname', None)
+            r_nickname = post_data.get('nickname', None)
 
             # create_user(username, email=None, password=None, **extra_fields)
             new_user = Profile.objects.create_user(
@@ -77,42 +79,49 @@ def register(request):
                 password=r_password,
             )
 
-            if r_firstname:
-                new_user.first_name = r_firstname
+            if r_nickname:
+                new_user.nickname = r_nickname
             else:
-                new_user.first_name = r_username
-
-            new_user.last_name = r_lastname
+                new_user.nickname = r_username
 
             new_user.save()
 
             i_user = authenticate(username=r_username, password=r_password)
             login(request, i_user)
-            respose = {'status': True, 'data': {'nickname': i_user.nickname}}
+            respose = {
+                'status': 1,
+                'data': {
+                    'user': get_user_info(i_user)
+                }
+            }
             return JsonResponse(respose)
 
 
 def signin(request):
     if request.method == "POST":
         post_data = request.POST
-
         username = post_data.get('username', None)
         password = post_data.get('password', None)
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
                 login(request, user)
-                respose = {'status': True, 'data': {'nickname': user.nickname}}
+                respose = {
+                    'status': 1,
+                    'data': {
+                        'user': get_user_info(user)
+                    }
+                }
                 return JsonResponse(respose)
             else:
                 pass
         else:
-            respose = {'status': False, 'data': {'error': '用户名或密码错误！'}}
+            respose = {'status': 0, 'data': {'error': '用户名或密码错误！'}}
             return JsonResponse(respose)
 
 
 def signout(request):
     if request.method == "POST":
         logout(request)
-        respose = {'status': True, 'data': {}}
+        respose = {'status': 1, 'data': {}}
         return JsonResponse(respose)
