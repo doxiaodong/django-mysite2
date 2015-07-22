@@ -120,8 +120,31 @@ def signin(request):
             return JsonResponse(respose)
 
 
+@ensure_csrf_cookie
 def signout(request):
     if request.method == "POST":
         logout(request)
         respose = {'status': 1, 'data': {}}
+        return JsonResponse(respose)
+
+
+def get_user(request):
+    if request.method == "POST":
+        post_data = request.POST
+        user = Profile.objects.get(username=post_data.get('username', None))
+        print(user)
+        if user:
+            respose = {
+                'status': 1,
+                'data': {
+                    'user': get_user_info(user)
+                }
+            }
+        else:
+            respose = {
+                'status': 0,
+                'data': {
+                    'error': '用户不存在'
+                }
+            }
         return JsonResponse(respose)

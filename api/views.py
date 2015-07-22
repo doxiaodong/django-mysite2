@@ -11,14 +11,21 @@ from rest_framework import viewsets, generics
 
 
 def get_user_info(user):
-    return {
-        'username': user.username,
-        'nickname': user.nickname,
-        'email': user.email,
-        'pic': str(user.pic),
-        'sex': user.sex,
-        'last_login': user.last_login
-    }
+    if user:
+        return {
+            'id': user.id,
+            'username': user.username,
+            'nickname': user.nickname,
+            'email': user.email,
+            'pic': str(user.pic),
+            'sex': {
+                'type': user.sex,
+                'word': '男' if user.sex == 0 else '女'
+            },
+            'last_login': user.last_login
+        }
+    else:
+        return None
 
 
 # Create your views here.
@@ -86,5 +93,16 @@ class SubCommentsDetailView(generics.ListAPIView):
         head = self.kwargs['head']
         head = Comment.objects.filter(url=head)
         sub_comments = SubComment.objects.filter(head=head)
+
+        return sub_comments
+
+
+class AccountSubCommentsDetailView(generics.ListAPIView):
+    serializer_class = SubCommentsSerializer
+
+    def get_queryset(self):
+        reply_object = self.kwargs['user']
+        reply_object = Profile.objects.filter(username=reply_object)
+        sub_comments = SubComment.objects.filter(reply_object=reply_object)
 
         return sub_comments

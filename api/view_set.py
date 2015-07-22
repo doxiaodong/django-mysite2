@@ -30,3 +30,11 @@ class SubCommentsViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = SubComment.objects.all()
     serializer_class = SubCommentsSerializer
+
+
+class AccountCommentViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Comment.objects.all()
+    serializer_class = CommentsSerializer

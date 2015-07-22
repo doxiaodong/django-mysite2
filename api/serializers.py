@@ -38,10 +38,11 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
 
 # comments
 class CommentsArticlesSeralizer(serializers.HyperlinkedModelSerializer):
+    category = ArticleCategoriesSerializer()
 
     class Meta:
         model = Article
-        fields = ('url',)
+        fields = ('url', 'title', 'category')
 
 
 class CommentsUserSeralizer(serializers.HyperlinkedModelSerializer):
@@ -61,10 +62,11 @@ class CommentsSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SubCommentsCommentsSerializer(serializers.HyperlinkedModelSerializer):
+    article = CommentsArticlesSeralizer()
 
     class Meta:
         model = Comment
-        fields = ('url',)
+        fields = ('url', 'article')
 
 
 class SubCommentsSerializer(serializers.HyperlinkedModelSerializer):
