@@ -18,5 +18,6 @@ urlpatterns = [
     url(r'^comment/subcomments/(?P<head>\w+)/$', views.SubCommentsDetailView.as_view()),
     url(r'^account/subcomments/(?P<user>\w+)/$', views.AccountSubCommentsDetailView.as_view()),
 
-    url(r'^account/', include('app.account.urls', namespace='account'))
+    url(r'^account/', include('app.account.urls', namespace='account')),
+    url(r'^comments/', include('app.comments.urls', namespace='comments')),
 ]

@@ -66,7 +66,7 @@ def register(request):
 
         r_username = post_data.get('username', None)
         if Profile.objects.filter(username=r_username):
-            return JsonResponse({'status': 0, 'data': {'error': '用户名已经存在'}})
+            return JsonResponse({'status': 0, 'msg': '用户名已经存在', 'data': {}})
         else:
             r_email = post_data.get('email', None)
             r_password = post_data.get('password', None)
@@ -90,6 +90,7 @@ def register(request):
             login(request, i_user)
             respose = {
                 'status': 1,
+                'msg': '注册成功',
                 'data': {
                     'user': get_user_info(i_user)
                 }
@@ -108,6 +109,7 @@ def signin(request):
                 login(request, user)
                 respose = {
                     'status': 1,
+                    'msg': '登录成功',
                     'data': {
                         'user': get_user_info(user)
                     }
@@ -116,7 +118,7 @@ def signin(request):
             else:
                 pass
         else:
-            respose = {'status': 0, 'data': {'error': '用户名或密码错误！'}}
+            respose = {'status': 0, 'msg': '用户名或密码错误', 'data': {}}
             return JsonResponse(respose)
 
 
@@ -124,7 +126,7 @@ def signin(request):
 def signout(request):
     if request.method == "POST":
         logout(request)
-        respose = {'status': 1, 'data': {}}
+        respose = {'status': 1, 'msg': '注销成功', 'data': {}}
         return JsonResponse(respose)
 
 
@@ -136,6 +138,7 @@ def get_user(request):
         if user:
             respose = {
                 'status': 1,
+                'msg': '获取用户信息成功',
                 'data': {
                     'user': get_user_info(user)
                 }
@@ -143,8 +146,56 @@ def get_user(request):
         else:
             respose = {
                 'status': 0,
-                'data': {
-                    'error': '用户不存在'
-                }
+                'msg': '用户不存在',
+                'data': {}
             }
         return JsonResponse(respose)
+
+
+def setting(request):
+    if request.method == "POST":
+        post_data = request.POST
+        print(post_data)
+
+        s_username = post_data.get('username', None)
+
+        if s_username != request.user.username and Profile.objects.filter(username=s_username):
+            return JsonResponse({'status': 0, 'msg': '用户名已经存在', 'data': {}})
+        else:
+            s_email = post_data.get('email', None)
+            s_nickname = post_data.get('nickname', None)
+            s_sex = post_data.get('sex', None)
+            s_pic = request.FILES.get('pic', None)
+
+            s_user = Profile.objects.get(username=request.user.username)
+
+            if s_pic:
+                n_s_pic = clip_resize_img(s_pic, 100, 100)
+
+                url = 'user/' + s_pic.name
+                name = settings.MEDIA_ROOT + '/' + url
+                if os.path.exists(name):
+                    file, ext = os.path.splitext(s_pic.name)
+                    file += (timezone.now().strftime("%Y-%m-%d_%H_%s"))
+                    s_pic.name = file + ext
+                    url = 'user/' + s_pic.name
+                    name = settings.MEDIA_ROOT + '/' + url
+                n_s_pic.save(name)
+
+                s_user.pic = url
+            if s_username:
+                s_user.username = s_username
+            if s_email:
+                s_user.email = s_email
+            if s_nickname:
+                s_user.nickname = s_nickname
+            s_user.sex = s_sex
+
+            s_user.save()
+
+            respose = {
+                'status': 1,
+                'msg': '修改成功',
+                'data': {}
+            }
+            return JsonResponse(respose)

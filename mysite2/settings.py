@@ -1,3 +1,4 @@
+# coding: utf-8
 """
 Django settings for mysite2 project.
 
@@ -23,7 +24,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '&zpmk=@&vz!a(y0e$v#@sczt^pisebm@82mzyhyg&g@!vldf)o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+import socket
+hostname = socket.gethostname()
+if hostname == 'iZ94zbdp1q5Z':
+    IS_LOCAL = False
+    USER_SESSION_EXPIRE = 10 * 60
+    DEBUG = False
+    EMPLATE_DEBUG = False
+else:
+    IS_LOCAL = True
+    USER_SESSION_EXPIRE = None
+    DEBUG = True
+    TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -70,7 +84,8 @@ ROOT_URLCONF = 'mysite2.urls'
 
 CORS_ORIGIN_WHITELIST = (
     'local.darlin.me',
-    'localhost:3000',
+    'static.darlin.me',
+    'darlin.me',
 )
 CORS_ALLOW_CREDENTIALS = True
 
@@ -96,12 +111,26 @@ WSGI_APPLICATION = 'mysite2.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if IS_LOCAL:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'mysite2',
+            'USER': 'root',
+            'PASSWORD': 'Shiwei122',
+            'HOST': '',
+            'CHARSET': 'utf8',
+            'PORT': '',
+        }
+    }
 
 
 # Internationalization
