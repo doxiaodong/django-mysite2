@@ -123,7 +123,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'mysite2',
+            'NAME': 'mysite',
             'USER': 'root',
             'PASSWORD': 'Shiwei122',
             'HOST': '',
