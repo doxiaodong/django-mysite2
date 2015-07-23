@@ -150,10 +150,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '//dn-darlin.qbox.me/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'dist'),
 )
+STATIC_ROOT = os.path.join(BASE_DIR, "")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
