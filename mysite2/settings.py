@@ -86,6 +86,7 @@ CORS_ORIGIN_WHITELIST = (
     'local.darlin.me',
     'static.darlin.me',
     'darlin.me',
+    'www.darlin.me',
 )
 CORS_ALLOW_CREDENTIALS = True
 
