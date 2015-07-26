@@ -7,3 +7,4 @@ node_modules/
 .idea/
 *.pyc
 *.sqlite3
+*.log
