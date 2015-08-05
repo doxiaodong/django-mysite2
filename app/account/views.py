@@ -16,6 +16,7 @@ from django.utils import timezone
 from api.views import get_user_info
 
 import sys
+
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
@@ -155,10 +156,11 @@ def get_user(request):
             }
         return JsonResponse(respose)
 
+
 @csrf_exempt
 def setting(request):
-    if request.method == "PUT":
-        put_data = request.PUT
+    if request.method == "POST":
+        put_data = request.POST
 
         s_username = put_data.get('username', None)
 
