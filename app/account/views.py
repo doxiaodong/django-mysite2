@@ -5,6 +5,7 @@ from django.http import JsonResponse, HttpResponseNotAllowed
 from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from ..account.models import Profile
 from ..comments.models import SubComment
 from PIL import Image
@@ -60,6 +61,7 @@ def clip_resize_img(ori_img, dst_w, dst_h):
 
 
 # Create your views here.
+@csrf_exempt
 def register(request):
     if request.method == "POST":
         post_data = request.POST
@@ -98,6 +100,7 @@ def register(request):
             return JsonResponse(respose)
 
 
+@csrf_exempt
 def signin(request):
     if request.method == "POST":
         post_data = request.POST
@@ -123,6 +126,7 @@ def signin(request):
 
 
 @ensure_csrf_cookie
+@csrf_exempt
 def signout(request):
     if request.method == "POST":
         logout(request)
@@ -130,11 +134,11 @@ def signout(request):
         return JsonResponse(respose)
 
 
+@csrf_exempt
 def get_user(request):
-    if request.method == "POST":
-        post_data = request.POST
-        user = Profile.objects.get(username=post_data.get('username', None))
-        print(user)
+    if request.method == "GET":
+        get_data = request.GET
+        user = Profile.objects.get(username=get_data.get('username', None))
         if user:
             respose = {
                 'status': 1,
@@ -151,20 +155,20 @@ def get_user(request):
             }
         return JsonResponse(respose)
 
-
+@csrf_exempt
 def setting(request):
-    if request.method == "POST":
-        post_data = request.POST
-        print(post_data)
+    if request.method == "PUT":
+        put_data = request.PUT
+        print(put_data)
 
-        s_username = post_data.get('username', None)
+        s_username = put_data.get('username', None)
 
         if s_username != request.user.username and Profile.objects.filter(username=s_username):
             return JsonResponse({'status': 0, 'msg': '用户名已经存在', 'data': {}})
         else:
-            s_email = post_data.get('email', None)
-            s_nickname = post_data.get('nickname', None)
-            s_sex = post_data.get('sex', None)
+            s_email = put_data.get('email', None)
+            s_nickname = put_data.get('nickname', None)
+            s_sex = put_data.get('sex', None)
             s_pic = request.FILES.get('pic', None)
 
             s_user = Profile.objects.get(username=request.user.username)

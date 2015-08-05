@@ -1,6 +1,7 @@
 # coding:utf-8
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseNotAllowed
+from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 import simplejson
 from django.core import serializers as core_serializers
@@ -11,6 +12,7 @@ from .models import Comment, SubComment
 
 
 # Create your views here.
+@csrf_exempt
 def add_reply(request, article):
     if request.method == 'POST':
         post_data = request.POST
@@ -61,6 +63,7 @@ def add_reply(request, article):
             return JsonResponse(respose)
 
 
+@csrf_exempt
 def add_sub_reply(request, head):
     if request.method == 'POST':
         post_data = request.POST
