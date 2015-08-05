@@ -136,9 +136,9 @@ def signout(request):
 
 @csrf_exempt
 def get_user(request):
-    if request.method == "GET":
-        get_data = request.GET
-        user = Profile.objects.get(username=get_data.get('username', None))
+    if request.method == "POST":
+        post_data = request.POST
+        user = Profile.objects.get(username=post_data.get('username', None))
         if user:
             respose = {
                 'status': 1,
@@ -159,7 +159,6 @@ def get_user(request):
 def setting(request):
     if request.method == "PUT":
         put_data = request.PUT
-        print(put_data)
 
         s_username = put_data.get('username', None)
 
