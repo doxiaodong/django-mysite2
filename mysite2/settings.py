@@ -82,12 +82,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'mysite2.urls'
 
-CORS_ORIGIN_WHITELIST = (
-    'local.darlin.me',
-    'static.darlin.me',
-    'darlin.me',
-    'www.darlin.me',
-)
 CORS_ALLOW_CREDENTIALS = True
 
 TEMPLATES = [
@@ -161,13 +155,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
-    'PAGE_SIZE': 10
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
+    'PAGE_SIZE': 50
 }
 
 SESSION_COOKIE_DOMAIN = '.darlin.me'
 CSRF_COOKIE_DOMAIN = '.darlin.me'
-# SESSION_COOKIE_DOMAIN = '.localhost:3000'
+
+CORS_ORIGIN_WHITELIST = (
+    'local.darlin.me',
+    'darlin.me',
+    'www.darlin.me',
+)
 
 AUTH_USER_MODEL = 'account.Profile'
