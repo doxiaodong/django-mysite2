@@ -2,6 +2,7 @@
 import datetime
 from django.utils import timezone
 from DjangoUeditor.models import UEditorField
+from django_markdown.models import MarkdownField
 from django.db import models
 
 
@@ -20,7 +21,9 @@ class Article(models.Model):
     category = models.ForeignKey(ArticleCategory)
     url = models.CharField("文章URL地址", max_length=100)
     title = models.CharField("标题", max_length=255)
-    content = UEditorField("内容", "100%", 120, imagePath="images/", filePath="files/", null=True, blank=True)
+    # content = UEditorField("内容", "100%", 120, imagePath="images/", filePath="files/", null=True, blank=True)
+    # content = models.TextField()
+    content = MarkdownField()
     create_time = models.DateTimeField("发布时间")
     pic = models.ImageField("图片", null=True, blank=True, upload_to='article/')
     hot = models.BooleanField("热门")

@@ -63,6 +63,7 @@ THIRD_APPS = (
     'DjangoUeditor',
     'rest_framework',
     'corsheaders',
+    'django_markdown',
 )
 
 INSTALLED_APPS = DEFAULT_APPS + LOCAL_APPS + THIRD_APPS
