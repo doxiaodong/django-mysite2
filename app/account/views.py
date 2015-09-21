@@ -14,6 +14,7 @@ import os
 from django.utils import timezone
 from django.conf import settings
 from qiniu import Auth
+from qiniu import put_data
 
 from api.views import get_user_info
 
@@ -162,29 +163,27 @@ def get_user(request):
 @csrf_exempt
 def setting(request):
     if request.method == "POST":
-        put_data = request.POST
+        post_data = request.POST
 
-        s_username = put_data.get('username', None)
+        s_username = post_data.get('username', None)
 
         if s_username != request.user.username and Profile.objects.filter(username=s_username):
             return JsonResponse({'status': 0, 'msg': '用户名已经存在', 'data': {}})
         else:
-            s_email = put_data.get('email', None)
-            s_nickname = put_data.get('nickname', None)
-            s_sex = put_data.get('sex', None)
+            s_email = post_data.get('email', None)
+            s_nickname = post_data.get('nickname', None)
+            s_sex = post_data.get('sex', None)
             s_pic = request.FILES.get('pic', None)
 
             s_user = Profile.objects.get(username=request.user.username)
 
             if s_pic:
-
-                q = Auth(settings.access_key, settings.secret_key)
-                key = s_user.username + '-' + s_pic.name
+                q = Auth(settings.QINIU_ACCESS_KEY, settings.QINIU_SECRET_KEY)
+                key = settings.QINIU_MEDIA_SRC + 'user/' + s_user.username + '/' + s_pic.name
                 data = s_pic
-                token = q.upload_token(settings.bucket_name, key)
-                ret, info = put_data(token, key, data, mime_type="text/plain", check_crc=True)
-
-                s_user.pic = settings.QINIU_MEDIA_SRC + ret['key']
+                token = q.upload_token(settings.QINIU_BUCKET_DEFAULT)
+                ret, info = put_data(token, key, data, mime_type=s_pic.content_type)
+                s_user.pic = ret['key']
             # if s_pic:
             #     n_s_pic = clip_resize_img(s_pic, 100, 100)
             #

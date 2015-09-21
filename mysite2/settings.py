@@ -164,9 +164,9 @@ REST_FRAMEWORK = {
 SESSION_COOKIE_DOMAIN = '.darlin.me'
 CSRF_COOKIE_DOMAIN = '.darlin.me'
 
-if IS_LOCAL:
-    SESSION_COOKIE_DOMAIN = 'localhost'
-    CSRF_COOKIE_DOMAIN = 'localhost'
+# if IS_LOCAL:
+#     SESSION_COOKIE_DOMAIN = 'localhost'
+#     CSRF_COOKIE_DOMAIN = 'localhost'
 
 CORS_ORIGIN_WHITELIST = (
     'local.darlin.me',
@@ -182,5 +182,3 @@ QINIU_BUCKET_DEFAULT = 'qiniu-darlin-me'
 QINIU_MEDIA_SRC = 'media/'
 
 API_URL = ''
-if IS_LOCAL:
-    API_URL = 'api/'
