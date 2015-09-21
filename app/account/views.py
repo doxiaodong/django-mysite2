@@ -7,11 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from ..account.models import Profile
-from ..comments.models import SubComment
-from PIL import Image
-from django.conf import settings
-import os
-from django.utils import timezone
+import hashlib
 from django.conf import settings
 from qiniu import Auth
 from qiniu import put_data
@@ -123,6 +119,7 @@ def get_user(request):
 def setting(request):
     if request.method == "POST":
         post_data = request.POST
+        m = hashlib.md5()
 
         s_username = post_data.get('username', None)
 
@@ -138,7 +135,7 @@ def setting(request):
 
             if s_pic:
                 q = Auth(settings.QINIU_ACCESS_KEY, settings.QINIU_SECRET_KEY)
-                key = settings.QINIU_MEDIA_SRC + 'user/' + s_user.username + '/' + s_pic.name
+                key = settings.QINIU_MEDIA_SRC + 'user/' + s_user.username + '/' + m.update(s_pic.name)
                 data = s_pic
                 token = q.upload_token(settings.QINIU_BUCKET_DEFAULT)
                 ret, info = put_data(token, key, data, mime_type=s_pic.content_type)
