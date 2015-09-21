@@ -134,8 +134,10 @@ def setting(request):
             s_user = Profile.objects.get(username=request.user.username)
 
             if s_pic:
+                m.update(s_pic.name)
+                pic_name_md5 = m.hexdigest()
                 q = Auth(settings.QINIU_ACCESS_KEY, settings.QINIU_SECRET_KEY)
-                key = settings.QINIU_MEDIA_SRC + 'user/' + s_user.username + '/' + m.update(s_pic.name)
+                key = settings.QINIU_MEDIA_SRC + 'user/' + s_user.username + '/' + pic_name_md5
                 data = s_pic
                 token = q.upload_token(settings.QINIU_BUCKET_DEFAULT)
                 ret, info = put_data(token, key, data, mime_type=s_pic.content_type)
