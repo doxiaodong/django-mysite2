@@ -10,7 +10,8 @@ class Profile(AbstractUser):
     # user = models.ForeignKey(settings.AUTH_USER_MODEL)
     nickname = models.CharField("昵称", max_length=255, default='darlin')
     sex = models.IntegerField('性别', default=0)
-    pic = models.ImageField('头像', upload_to='user/', default='user/favicon.png')
+    # pic = models.ImageField('头像', upload_to='user/', default='user/favicon.png')
+    pic = models.CharField("头像", max_length=255, default='media/head.png')
 
     class Meta:
         db_table = 'account_profile'

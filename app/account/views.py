@@ -12,6 +12,8 @@ from PIL import Image
 from django.conf import settings
 import os
 from django.utils import timezone
+from django.conf import settings
+from qiniu import Auth
 
 from api.views import get_user_info
 
@@ -175,19 +177,28 @@ def setting(request):
             s_user = Profile.objects.get(username=request.user.username)
 
             if s_pic:
-                n_s_pic = clip_resize_img(s_pic, 100, 100)
 
-                url = 'user/' + s_pic.name
-                name = settings.MEDIA_ROOT + '/' + url
-                if os.path.exists(name):
-                    file, ext = os.path.splitext(s_pic.name)
-                    file += (timezone.now().strftime("%Y-%m-%d_%H_%s"))
-                    s_pic.name = file + ext
-                    url = 'user/' + s_pic.name
-                    name = settings.MEDIA_ROOT + '/' + url
-                n_s_pic.save(name)
+                q = Auth(settings.access_key, settings.secret_key)
+                key = s_user.username + '-' + s_pic.name
+                data = s_pic
+                token = q.upload_token(settings.bucket_name, key)
+                ret, info = put_data(token, key, data, mime_type="text/plain", check_crc=True)
 
-                s_user.pic = url
+                s_user.pic = settings.QINIU_MEDIA_SRC + ret['key']
+            # if s_pic:
+            #     n_s_pic = clip_resize_img(s_pic, 100, 100)
+            #
+            #     url = 'user/' + s_pic.name
+            #     name = settings.MEDIA_ROOT + '/' + url
+            #     if os.path.exists(name):
+            #         file, ext = os.path.splitext(s_pic.name)
+            #         file += (timezone.now().strftime("%Y-%m-%d_%H_%s"))
+            #         s_pic.name = file + ext
+            #         url = 'user/' + s_pic.name
+            #         name = settings.MEDIA_ROOT + '/' + url
+            #     n_s_pic.save(name)
+            #
+            #     s_user.pic = url
             if s_username:
                 s_user.username = s_username
             if s_email:

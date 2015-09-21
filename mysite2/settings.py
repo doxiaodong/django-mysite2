@@ -164,6 +164,10 @@ REST_FRAMEWORK = {
 SESSION_COOKIE_DOMAIN = '.darlin.me'
 CSRF_COOKIE_DOMAIN = '.darlin.me'
 
+if IS_LOCAL:
+    SESSION_COOKIE_DOMAIN = 'localhost'
+    CSRF_COOKIE_DOMAIN = 'localhost'
+
 CORS_ORIGIN_WHITELIST = (
     'local.darlin.me',
     'darlin.me',
@@ -171,3 +175,12 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 AUTH_USER_MODEL = 'account.Profile'
+
+QINIU_ACCESS_KEY = 'RR8xxStViBpzNJ4pQjD1sBZH3JsWN-ou-LR1D_iT'
+QINIU_SECRET_KEY = '9oxjA6WIOGBRqUYnyVgrGzp4kEWbTzQ-lcW9Ear7'
+QINIU_BUCKET_DEFAULT = 'qiniu-darlin-me'
+QINIU_MEDIA_SRC = 'media/'
+
+API_URL = ''
+if IS_LOCAL:
+    API_URL = 'api/'

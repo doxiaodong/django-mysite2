@@ -22,10 +22,10 @@ from . import settings
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^', include('api.urls', namespace='api')),
+    url(r'^'+settings.API_URL, include('api.urls', namespace='api')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    url(r'^ueditor/', include('DjangoUeditor.urls')),
+    # url(r'^ueditor/', include('DjangoUeditor.urls')),
     url('^markdown/', include('django_markdown.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
