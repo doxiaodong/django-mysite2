@@ -23,47 +23,6 @@ import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-
-# functions
-
-
-def clip_resize_img(ori_img, dst_w, dst_h):
-    im = Image.open(ori_img)
-    ori_w, ori_h = im.size
-
-    dst_scale = float(dst_h) / dst_w  # 目标高宽比
-    ori_scale = float(ori_h) / ori_w  # 原高宽比
-    if ori_scale >= dst_scale:
-        # 过高
-        width = ori_w
-        height = int(width * dst_scale)
-
-        ww = dst_w
-
-    else:
-        # 过宽
-        height = ori_h
-        width = int(height * dst_scale)
-
-        ww = int(100 / ori_scale)
-
-    dst_w = ww
-
-    new_im = im
-
-    ratio = float(dst_w) / width
-    new_width = int(width * ratio)
-    if ori_w < new_width:
-        new_width = ori_w
-
-    new_height = int(height * ratio)
-    if ori_h < new_height:
-        new_height = ori_h
-
-    new_im.thumbnail((new_width, new_height), Image.ANTIALIAS)
-    return new_im
-
-
 # Create your views here.
 @csrf_exempt
 def register(request):
@@ -184,20 +143,6 @@ def setting(request):
                 token = q.upload_token(settings.QINIU_BUCKET_DEFAULT)
                 ret, info = put_data(token, key, data, mime_type=s_pic.content_type)
                 s_user.pic = ret['key']
-            # if s_pic:
-            #     n_s_pic = clip_resize_img(s_pic, 100, 100)
-            #
-            #     url = 'user/' + s_pic.name
-            #     name = settings.MEDIA_ROOT + '/' + url
-            #     if os.path.exists(name):
-            #         file, ext = os.path.splitext(s_pic.name)
-            #         file += (timezone.now().strftime("%Y-%m-%d_%H_%s"))
-            #         s_pic.name = file + ext
-            #         url = 'user/' + s_pic.name
-            #         name = settings.MEDIA_ROOT + '/' + url
-            #     n_s_pic.save(name)
-            #
-            #     s_user.pic = url
             if s_username:
                 s_user.username = s_username
             if s_email:
