@@ -168,7 +168,7 @@ def forget(request):
         password1 = post_data.get('old_password', None)
         password2 = post_data.get('new_password', None)
         # user = authenticate(username=username, password=password1)
-        user = Profile.objects.get(username=request.user.username)
+        user = Profile.objects.get(username=username)
         if user is not None:
             user.password = password2
             user.save()
