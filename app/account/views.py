@@ -158,3 +158,33 @@ def setting(request):
                 'data': {}
             }
             return JsonResponse(respose)
+
+
+@csrf_exempt
+def forget(request):
+    if request.method == "POST":
+        post_data = request.POST
+        username = post_data.get('username', None)
+        password1 = post_data.get('old_password', None)
+        password2 = post_data.get('new_password', None)
+        # user = authenticate(username=username, password=password1)
+        user = Profile.objects.get(username=request.user.username)
+        if user is not None:
+            user.password = password2
+            user.save()
+            # if user.is_active:
+            #     login(request, user)
+            #     respose = {
+            #         'status': 1,
+            #         'msg': '登录成功',
+            #         'data': {
+            #             'user': get_user_info(user)
+            #         }
+            #     }
+            #     return JsonResponse(respose)
+            # else:
+            #     pass
+            return JsonResponse({'status': 1})
+        else:
+            respose = {'status': 0, 'msg': '用户名或密码错误', 'data': {}}
+            return JsonResponse(respose)
