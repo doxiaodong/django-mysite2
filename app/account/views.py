@@ -167,23 +167,23 @@ def forget(request):
         username = post_data.get('username', None)
         password1 = post_data.get('old_password', None)
         password2 = post_data.get('new_password', None)
-        user = authenticate(username=username, password='shiwei122')
+        user = authenticate(username=username, password=password1)
         if user is not None:
-            user.set_password(password2)
-            user.save()
-            # if user.is_active:
-            #     login(request, user)
-            #     respose = {
-            #         'status': 1,
-            #         'msg': '登录成功',
-            #         'data': {
-            #             'user': get_user_info(user)
-            #         }
-            #     }
-            #     return JsonResponse(respose)
-            # else:
-            #     pass
-            return JsonResponse({'status': 1})
+            if user.is_active:
+                user.set_password(password2)
+                user.save()
+                login(request, user)
+                respose = {
+                    'status': 1,
+                    'msg': '登录成功',
+                    'data': {
+                        'user': get_user_info(user)
+                    }
+                }
+                return JsonResponse(respose)
+            else:
+                respose = {'status': 0, 'msg': '用户未被激活', 'data': {}}
+                return JsonResponse(respose)
         else:
             respose = {'status': 0, 'msg': '用户名或密码错误', 'data': {}}
             return JsonResponse(respose)
