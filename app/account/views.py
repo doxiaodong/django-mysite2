@@ -169,7 +169,7 @@ def forget(request):
         password2 = post_data.get('new_password', None)
         user = authenticate(username=username, password='shiwei122')
         if user is not None:
-            user.password = password2
+            user.set_password(password2)
             user.save()
             # if user.is_active:
             #     login(request, user)
