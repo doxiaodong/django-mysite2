@@ -161,7 +161,7 @@ def setting(request):
 
 
 @csrf_exempt
-def forget(request):
+def change(request):
     if request.method == "POST":
         post_data = request.POST
         username = post_data.get('username', None)
@@ -175,7 +175,7 @@ def forget(request):
                 login(request, user)
                 respose = {
                     'status': 1,
-                    'msg': '登录成功',
+                    'msg': '修改密码成功',
                     'data': {
                         'user': get_user_info(user)
                     }
@@ -186,4 +186,31 @@ def forget(request):
                 return JsonResponse(respose)
         else:
             respose = {'status': 0, 'msg': '用户名或密码错误', 'data': {}}
+            return JsonResponse(respose)
+
+
+@csrf_exempt
+def reset(request):
+    if request.method == "POST":
+        if request.user.id == 1:
+            post_data = request.POST
+            username = post_data.get('username', None)
+            password2 = post_data.get('new_password', None)
+            user = Profile.objects.get(username=username)
+            if user is not None:
+                user.set_password(password2)
+                user.save()
+                respose = {
+                    'status': 1,
+                    'msg': '重置密码成功',
+                    'data': {
+                        'user': username
+                    }
+                }
+                return JsonResponse(respose)
+            else:
+                respose = {'status': 0, 'msg': '用户名不存在', 'data': {}}
+                return JsonResponse(respose)
+        else:
+            respose = {'status': 0, 'msg': '没有权限', 'data': {}}
             return JsonResponse(respose)

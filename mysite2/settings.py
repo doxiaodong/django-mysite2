@@ -181,4 +181,9 @@ QINIU_SECRET_KEY = '9oxjA6WIOGBRqUYnyVgrGzp4kEWbTzQ-lcW9Ear7'
 QINIU_BUCKET_DEFAULT = 'qiniu-darlin-me'
 QINIU_MEDIA_SRC = 'media/'
 
+GITHUB_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
+GITHUB_CLIENT_ID = 'c3b1f0c02a459943fbef'
+GITHUB_CLIENT_SECRET = '63000036a72e6ac9e9a4bd39674b4caa9f134aa4'
+GITHUB_CALLBACK = 'http://darlin.me'
+
 API_URL = ''

@@ -20,4 +20,6 @@ urlpatterns = [
 
     url(r'^account/', include('app.account.urls', namespace='account')),
     url(r'^comments/', include('app.comments.urls', namespace='comments')),
+    
+    url(r'^third/', include('app.third.urls', namespace='third')),
 ]
