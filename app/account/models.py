@@ -13,7 +13,7 @@ class Profile(AbstractUser):
     # pic = models.ImageField('头像', upload_to='user/', default='user/favicon.png')
     pic = models.CharField("头像", max_length=255, default='assets/images/head/head.png')
 
-    third = models.CharField("第三方", max_length=255, blank=True, null=True)
+    # third = models.CharField("第三方", max_length=255, blank=True, null=True)
 
     class Meta:
         db_table = 'account_profile'
