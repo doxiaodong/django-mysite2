@@ -172,6 +172,7 @@ CORS_ORIGIN_WHITELIST = (
     'local.darlin.me',
     'darlin.me',
     'www.darlin.me',
+    'spider.darlin.me',
 )
 
 AUTH_USER_MODEL = 'account.Profile'
