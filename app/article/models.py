@@ -40,5 +40,5 @@ class Article(models.Model):
     was_created_recently.short_description = "最近发布"
 
     class Meta:
-        ordering = ["is_up", "-create_time"]
+        ordering = ["-is_up", "-create_time"]
 
