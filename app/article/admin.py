@@ -11,7 +11,7 @@ class ArticleAdmin(admin.ModelAdmin):
             'fields': ['title']
         }),
         ('其他信息', {
-            'fields': ['url', 'category', 'create_time', 'content', 'hot'],
+            'fields': ['url', 'category', 'create_time', 'content', 'hot', 'is_up'],
         }),
     ]
 

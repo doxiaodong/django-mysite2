@@ -27,6 +27,7 @@ class Article(models.Model):
     create_time = models.DateTimeField("发布时间")
     pic = models.ImageField("图片", null=True, blank=True, upload_to='article/')
     hot = models.BooleanField("热门")
+    is_up = models.BooleanField("置顶")
 
     def __unicode__(self):
         return self.title
@@ -39,5 +40,5 @@ class Article(models.Model):
     was_created_recently.short_description = "最近发布"
 
     class Meta:
-        ordering = ["-create_time"]
+        ordering = ["is_up", "-create_time"]
 
