@@ -38,3 +38,11 @@ class AccountCommentViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Comment.objects.all()
     serializer_class = CommentsSerializer
+
+
+class LinkViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Link.objects.all()
+    serializer_class = LinkSerializer

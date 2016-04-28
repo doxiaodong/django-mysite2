@@ -9,6 +9,7 @@ router.register(r'article/categories', view_set.ArticleCategoriesViewSet)
 router.register(r'article', view_set.ArticleViewSet)
 # router.register(r'subcomments', view_set.SubCommentsViewSet)
 router.register(r'comments', view_set.AccountCommentViewSet)
+router.register(r'links', view_set.LinkViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

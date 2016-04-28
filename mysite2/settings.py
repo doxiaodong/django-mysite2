@@ -57,6 +57,7 @@ LOCAL_APPS = (
     'app.article',
     'app.account',
     'app.comments',
+    'app.link',
 )
 
 THIRD_APPS = (

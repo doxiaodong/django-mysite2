@@ -1,6 +1,7 @@
 from app.article.models import ArticleCategory, Article
 from app.comments.models import Comment, SubComment
 from app.account.models import Profile
+from app.link.models import Link
 from rest_framework import serializers
 
 
@@ -78,3 +79,9 @@ class SubCommentsSerializer(serializers.HyperlinkedModelSerializer):
         model = SubComment
         fields = ('head', 'reply_user', 'reply_object', 'content', 'reply_time')
 
+
+class LinkSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Link
+        fields = ('url', 'title', 'type')
