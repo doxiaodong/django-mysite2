@@ -14,7 +14,7 @@ class CommentAdmin(admin.ModelAdmin):
         }),
     ]
 
-    list_display = ('content', 'reply_time', 'article', 'was_reply_recently')
+    list_display = ('content', 'reply_time', 'reply_user', 'article', 'was_reply_recently')
     list_filter = ['reply_time']
     search_fields = ['article']
 
@@ -29,7 +29,7 @@ class SubCommentAdmin(admin.ModelAdmin):
         }),
     ]
 
-    list_display = ('content', 'reply_time', 'head', 'was_subreply_recently')
+    list_display = ('content', 'reply_time', 'head', 'reply_user', 'reply_object', 'was_subreply_recently')
     list_filter = ['reply_time']
     search_fields = ['head']
 
