@@ -125,6 +125,8 @@ def setting(request):
 
         if s_username != request.user.username and Profile.objects.filter(username=s_username):
             return JsonResponse({'status': 0, 'msg': '用户名已经存在', 'data': {}})
+        if s_username != request.user.username and request.user.third != 'none':
+            return JsonResponse({'status': 0, 'msg': '第三方账号不允许修改用户名', 'data': {}})
         else:
             s_email = post_data.get('email', None)
             s_nickname = post_data.get('nickname', None)
