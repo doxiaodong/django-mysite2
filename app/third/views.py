@@ -30,7 +30,7 @@ def get_code(request):
         url = settings.GITHUB_AUTHORIZE_URL
         data = {
             'client_id': settings.GITHUB_CLIENT_ID,
-            'redirect_uri': '/third/github/?step=access_token',
+            'redirect_uri': 'https://api.darlin.me/third/github/?step=access_token',
             'state': 'd1f649dee27528d459001800fd88a8e9',
         }
         data = urllib.urlencode(data)
