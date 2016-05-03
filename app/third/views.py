@@ -69,10 +69,10 @@ def get_user(request, url_params):
         'email': github_user_info.get('email'),
         'nickname': github_user_info.get('login')
     }
-    return third_login(request, user_info)
+    return github_login(request, user_info)
 
 
-def third_login(request, data):
+def github_login(request, data):
     r_username = data.get('username')
     if Profile.objects.filter(username=r_username):
         user = Profile.objects.get(username=r_username)
@@ -90,6 +90,7 @@ def third_login(request, data):
             password=r_password,
         )
         new_user.nickname = r_nickname
+        new_user.third = 'github'
 
         new_user.save()
 

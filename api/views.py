@@ -22,7 +22,8 @@ def get_user_info(user):
                 'type': user.sex,
                 'word': '男' if user.sex == 0 else '女'
             },
-            'last_login': user.last_login
+            'last_login': user.last_login,
+            'third': user.third
         }
     else:
         return None
