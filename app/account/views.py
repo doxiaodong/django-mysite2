@@ -167,6 +167,8 @@ def change(request):
         username = post_data.get('username', None)
         password1 = post_data.get('old_password', None)
         password2 = post_data.get('new_password', None)
+        if password1 == '':
+            password1 = 'abcdefghijklmnopqrstuvwxyz'
         user = authenticate(username=username, password=password1)
         if user is not None:
             if user.is_active:
