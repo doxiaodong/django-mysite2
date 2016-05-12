@@ -49,7 +49,7 @@ def add_reply(request, article):
                             'replyUser': {
                                 'pic': str(comment.reply_user.pic),
                                 'username': comment.reply_user.username,
-                                'nickName': comment.reply_user.nickname
+                                'nickname': comment.reply_user.nickname
                             },
                             'content': comment.content,
                             'time': comment.reply_time,
@@ -100,12 +100,12 @@ def add_sub_reply(request, head):
                             'replyUser': {
                                 'pic': str(sub_comment.reply_user.pic),
                                 'username': sub_comment.reply_user.username,
-                                'nickName': sub_comment.reply_user.nickname
+                                'nickname': sub_comment.reply_user.nickname
                             },
                             'replyObject': {
                                 'pic': str(sub_comment.reply_object.pic),
                                 'username': sub_comment.reply_object.username,
-                                'nickName': sub_comment.reply_object.nickname
+                                'nickname': sub_comment.reply_object.nickname
                             },
                             'content': sub_comment.content,
                             'time': sub_comment.reply_time
