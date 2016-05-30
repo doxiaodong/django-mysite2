@@ -74,6 +74,7 @@ def get_user_openid(request, access_token):
 
 
 def get_user(request, url_params, access_token):
+    print 'get_user'
     url = 'https://graph.qq.com/user/get_user_info'
     data = {
         'access_token': access_token,
@@ -94,6 +95,7 @@ def get_user(request, url_params, access_token):
 
 
 def qq_login(request, data):
+    print 'qq_login'
     r_username = data.get('username')
     if Profile.objects.filter(username=r_username):
         user = Profile.objects.get(username=r_username)
@@ -117,5 +119,7 @@ def qq_login(request, data):
 
         i_user = authenticate(username=r_username, password=r_password)
         login(request, i_user)
+
+    print 66666
 
     return HttpResponseRedirect('https://darlin.me')
