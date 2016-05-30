@@ -53,21 +53,21 @@ def get_access_token(request):
         data = urllib.urlencode(data)
         complete_url = url + '?' + data
         ret = requests.get(complete_url)
-        ret = dict((k, v[0] for k, v in urlparse.parse_qs(ret).items()))
+        access_token = urlparse.parse_qs(ret)['access_token'][0]
 
-        get_user_openid(request, ret)
+        get_user_openid(request, access_token)
 
 
-def get_user_openid(request, ret):
+def get_user_openid(request, access_token):
     url = 'https://graph.qq.com/oauth2.0/me'
     data = {
-        'access_token': ret['access_token'],
+        'access_token': access_token,
     }
 
     complete_url = url + '?' + data
     res = requests.get(complete_url)
     url_params = res.text
-    return get_user(request, url_params, ret['access_token'])
+    return get_user(request, url_params, access_token)
 
 
 def get_user(request, url_params, access_token):
