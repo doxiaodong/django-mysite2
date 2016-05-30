@@ -66,7 +66,7 @@ def get_user_openid(request, access_token):
     data = {
         'access_token': access_token,
     }
-
+    data = urllib.urlencode(data)
     complete_url = url + '?' + data
     res = requests.get(complete_url)
     url_params = res.text
