@@ -75,10 +75,10 @@ def get_user_openid(request, access_token):
 
 
 def callback(obj):
-    print obj['client_id'], obj['openid']
+    print obj.get('client_id'), obj.get('openid')
     return {
-        'client_id': obj['client_id'],
-        'openid': obj['openid'],
+        'client_id': obj.get('client_id'),
+        'openid': obj.get('openid'),
     }
 
 
