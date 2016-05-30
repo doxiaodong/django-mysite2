@@ -70,16 +70,17 @@ def get_user_openid(request, access_token):
     complete_url = url + '?' + data
     res = requests.get(complete_url)
     url_params = res.text
+    print url_params
     return get_user(request, url_params, access_token)
 
 
 def get_user(request, url_params, access_token):
-    print 'get_user'
+    print 'get_user', url_params
     url = 'https://graph.qq.com/user/get_user_info'
     data = {
         'access_token': access_token,
-        'oauth_consumer_key': url_params.client_id,
-        'openid': url_params.openid,
+        'oauth_consumer_key': url_params['client_id'],
+        'openid': url_params['openid'],
     }
     data = urllib.urlencode(data)
     complete_url = url + '?' + data
@@ -87,7 +88,7 @@ def get_user(request, url_params, access_token):
     qq_user_info = json.loads(res.text)
 
     user_info = {
-        'username': 'qq_' + url_params.openid,
+        'username': 'qq_' + url_params['openid'],
         'email': '',
         'nickname': qq_user_info.get('nickname')
     }
