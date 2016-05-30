@@ -53,7 +53,7 @@ def get_access_token(request):
         data = urllib.urlencode(data)
         complete_url = url + '?' + data
         ret = requests.get(complete_url)
-        access_token = urlparse.parse_qs(ret)['access_token'][0]
+        access_token = urlparse.parse_qs(ret.text)['access_token'][0]
 
         return get_user_openid(request, access_token)
 
