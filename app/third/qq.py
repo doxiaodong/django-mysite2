@@ -1,6 +1,7 @@
 import urllib
 import json
 import requests
+import urlparse
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponseNotAllowed
 from django.contrib.auth import authenticate, login, logout
 from ..account.models import Profile
@@ -50,24 +51,23 @@ def get_access_token(request):
             'redirect_uri': 'https://api.darlin.me/third/qq/?step=user_openid',
         }
         data = urllib.urlencode(data)
-        redirect_url = url + '?' + data
-        return HttpResponseRedirect(redirect_url)
-
-
-def get_user_openid(request):
-    if request.method == 'GET':
-        get_data = request.GET
-        access_token = get_data.get('access_token')
-        url = 'https://graph.qq.com/oauth2.0/me'
-        data = {
-            'access_token': access_token,
-        }
-
         complete_url = url + '?' + data
-        res = requests.get(complete_url)
-        url_params = res.text
-        return get_user(request, url_params, access_token)
+        ret = requests.get(complete_url)
+        ret = dict((k, v[0] for k, v in urlparse.parse_qs(ret).items()))
 
+        get_user_openid(request, ret)
+
+
+def get_user_openid(request, ret):
+    url = 'https://graph.qq.com/oauth2.0/me'
+    data = {
+        'access_token': ret['access_token'],
+    }
+
+    complete_url = url + '?' + data
+    res = requests.get(complete_url)
+    url_params = res.text
+    return get_user(request, url_params, ret['access_token'])
 
 
 def get_user(request, url_params, access_token):
