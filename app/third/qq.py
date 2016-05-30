@@ -55,7 +55,7 @@ def get_access_token(request):
         ret = requests.get(complete_url)
         access_token = urlparse.parse_qs(ret)['access_token'][0]
 
-        get_user_openid(request, access_token)
+        return get_user_openid(request, access_token)
 
 
 def get_user_openid(request, access_token):
