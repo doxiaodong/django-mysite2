@@ -54,13 +54,14 @@ def get_access_token(request):
         complete_url = url + '?' + data
         print complete_url
         ret = requests.get(complete_url)
-        print ret
+        print ret.text, 22222
         access_token = urlparse.parse_qs(ret.text)['access_token'][0]
-
+        print access_token, 33333
         return get_user_openid(request, access_token)
 
 
 def get_user_openid(request, access_token):
+    print access_token, 4444
     url = 'https://graph.qq.com/oauth2.0/me'
     data = {
         'access_token': access_token,
