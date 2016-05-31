@@ -78,7 +78,7 @@ def callback(obj):
 def get_user(request, url_params, access_token):
     print 'get_user'
     # url_params = 'callback( {"client_id":"101322546","openid":"442F5423D8457D1C8DCF2B5D01023B25"} );'
-    url_params = url_params[0:-1]
+    url_params = url_params.strip(';')
     print url_params
     ret = eval(url_params)
     print ret
