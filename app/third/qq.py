@@ -95,7 +95,7 @@ def get_user(request, url_params, access_token):
     print 5555, qq_user_info
 
     user_info = {
-        'username': 'qq_' + url_params['openid'],
+        'username': 'qq_' + ret.get('openid'),
         'email': '',
         'nickname': qq_user_info.get('nickname')
     }
