@@ -91,11 +91,16 @@ def get_user(request, url_params, access_token):
     res = requests.get(complete_url)
     qq_user_info = json.loads(res.text)
 
+    if qq_user_info.get('gender') == '男':
+        sex = 0
+    else:
+        sex = 1
     user_info = {
         'username': 'qq_' + ret.get('openid'),
         'email': ret.get('openid')[0:10] + '@qq.com',
         'nickname': qq_user_info.get('nickname'),
         'pic': qq_user_info.get('figureurl_qq_2'),
+        'sex': sex
     }
     return qq_login(request, user_info)
 
@@ -119,6 +124,7 @@ def qq_login(request, data):
         )
         new_user.nickname = r_nickname
         new_user.pic = data.get('pic')
+        new_user.sex = data.get('sex')
         new_user.third = 'qq'
 
         new_user.save()
