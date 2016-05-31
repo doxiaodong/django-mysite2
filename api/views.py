@@ -54,7 +54,8 @@ class ArticleListDetailView(generics.ListAPIView):
     def get_queryset(self):
         category = self.kwargs['category']
         if category == 'all':
-            articles = Article.objects.all().exclude(category='aabbccddmv')
+            mv_category = ArticleCategory.objects.get(url='aabbccddmv')
+            articles = Article.objects.all().exclude(category=mv_category)
         elif category == 'hot':
             articles = Article.objects.filter(hot=True)
         else:
