@@ -1,3 +1,5 @@
+# coding:utf-8
+
 import urllib
 import json
 import requests
@@ -10,7 +12,7 @@ from django.shortcuts import render
 from django.conf import settings
 
 
-def login(request):
+def login_route(request):
     if request.method == 'GET':
         get_data = request.GET
         step = get_data.get('step', 'code')
@@ -71,17 +73,13 @@ def get_user_openid(request, access_token):
 
 
 def callback(obj):
-    print 111, obj
     return obj
 
 
 def get_user(request, url_params, access_token):
-    print 'get_user', url_params
     # url_params = 'callback( {"client_id":"101322546","openid":"442F5423D8457D1C8DCF2B5D01023B25"} );'
     new_url_params = url_params.replace(';', '')
-    print new_url_params
     ret = eval(new_url_params)
-    print ret
     url = 'https://graph.qq.com/user/get_user_info'
     data = {
         'access_token': access_token,
@@ -92,19 +90,17 @@ def get_user(request, url_params, access_token):
     complete_url = url + '?' + data
     res = requests.get(complete_url)
     qq_user_info = json.loads(res.text)
-    print 5555, qq_user_info
 
     user_info = {
         'username': 'qq_' + ret.get('openid'),
-        'email': ret.get('openid') + '@qq.com',
-        'nickname': qq_user_info.get('nickname')
+        'email': ret.get('openid')[0:10] + '@qq.com',
+        'nickname': qq_user_info.get('nickname'),
     }
     return qq_login(request, user_info)
 
 
 def qq_login(request, data):
-    print 'qq_login'
-    r_username = data.get('username')
+    r_username = data.get('username')[0:25]
     if Profile.objects.filter(username=r_username):
         user = Profile.objects.get(username=r_username)
         user.backend = 'django.contrib.auth.backends.ModelBackend'
@@ -127,7 +123,5 @@ def qq_login(request, data):
 
         i_user = authenticate(username=r_username, password=r_password)
         login(request, i_user)
-
-    print 66666
 
     return HttpResponseRedirect('https://darlin.me')

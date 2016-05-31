@@ -67,7 +67,7 @@ def get_user(request, url_params):
     user_info = {
         'username': 'github_' + github_user_info.get('login'),
         'email': github_user_info.get('email'),
-        'nickname': github_user_info.get('login')
+        'nickname': github_user_info.get('login'),
     }
     return github_login(request, user_info)
 

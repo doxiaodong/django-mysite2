@@ -5,5 +5,5 @@ from . import qq
 
 urlpatterns = [
     url(r'^github/$', views.github, name='github'),
-    url(r'^qq/$', qq.login),
+    url(r'^qq/$', qq.login_route),
 ]
