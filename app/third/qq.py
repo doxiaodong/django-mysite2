@@ -80,6 +80,7 @@ def callback(obj):
 
 def get_user(request, url_params, access_token):
 
+    url_params = url_params.strip(';')
     ret = eval(url_params)  # callback( {"client_id":"101322546","openid":"442F5423D8457D1C8DCF2B5D01023B25"} );
     print ret
     url = 'https://graph.qq.com/user/get_user_info'
