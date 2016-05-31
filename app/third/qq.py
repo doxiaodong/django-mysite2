@@ -66,12 +66,12 @@ def get_user_openid(request, access_token):
     complete_url = url + '?' + data
     res = requests.get(complete_url)
     url_params = res.text
-    print url_params
     return get_user(request, url_params, access_token)
 
 
 def callback(obj):
-    print obj.get('client_id'), obj.get('openid')
+    print 111, obj
+    print 222, obj.get('client_id')
     return {
         'client_id': obj.get('client_id'),
         'openid': obj.get('openid'),
@@ -79,6 +79,7 @@ def callback(obj):
 
 
 def get_user(request, url_params, access_token):
+
     ret = eval(url_params)  # callback( {"client_id":"101322546","openid":"442F5423D8457D1C8DCF2B5D01023B25"} );
     print ret
     url = 'https://graph.qq.com/user/get_user_info'
