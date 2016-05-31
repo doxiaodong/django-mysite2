@@ -95,6 +95,7 @@ def get_user(request, url_params, access_token):
         'username': 'qq_' + ret.get('openid'),
         'email': ret.get('openid')[0:10] + '@qq.com',
         'nickname': qq_user_info.get('nickname'),
+        'pic': qq_user_info.get('figureurl_qq_2'),
     }
     return qq_login(request, user_info)
 
@@ -117,6 +118,7 @@ def qq_login(request, data):
             password=r_password,
         )
         new_user.nickname = r_nickname
+        new_user.pic = data.get('pic')
         new_user.third = 'qq'
 
         new_user.save()

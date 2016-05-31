@@ -68,6 +68,7 @@ def get_user(request, url_params):
         'username': 'github_' + github_user_info.get('login'),
         'email': github_user_info.get('email'),
         'nickname': github_user_info.get('login'),
+        'pic': github_user_info.get('avatar_url'),
     }
     return github_login(request, user_info)
 
@@ -90,6 +91,7 @@ def github_login(request, data):
             password=r_password,
         )
         new_user.nickname = r_nickname
+        new_user.pic = data.get('pic')
         new_user.third = 'github'
 
         new_user.save()
