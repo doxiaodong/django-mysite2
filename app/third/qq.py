@@ -96,7 +96,7 @@ def get_user(request, url_params, access_token):
 
     user_info = {
         'username': 'qq_' + ret.get('openid'),
-        'email': '',
+        'email': ret.get('openid') + '@qq.com',
         'nickname': qq_user_info.get('nickname')
     }
     return qq_login(request, user_info)
