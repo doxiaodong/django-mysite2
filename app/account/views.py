@@ -28,6 +28,8 @@ def register(request):
         r_username = post_data.get('username', None)
         if Profile.objects.filter(username=r_username):
             return JsonResponse({'status': 0, 'msg': '用户名已经存在', 'data': {}})
+        elif r_username[0] == '_':
+            return JsonResponse({'status': 0, 'msg': '用户名不能以「_」开始', 'data': {}})
         else:
             r_email = post_data.get('email', None)
             r_password = post_data.get('password', None)

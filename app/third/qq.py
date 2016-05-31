@@ -96,7 +96,7 @@ def get_user(request, url_params, access_token):
     else:
         sex = 1
     user_info = {
-        'username': 'qq_' + ret.get('openid'),
+        'username': '_qq_' + ret.get('openid'),
         'email': ret.get('openid')[0:10] + '@qq.com',
         'nickname': qq_user_info.get('nickname'),
         'pic': qq_user_info.get('figureurl_qq_2'),
