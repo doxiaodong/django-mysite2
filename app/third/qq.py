@@ -107,15 +107,24 @@ def get_user(request, url_params, access_token):
 
 def qq_login(request, data):
     r_username = data.get('username')[0:25]
+    r_nickname = data.get('nickname')
+    r_email = data.get('email')
+    r_pic = data.get('pic')
+    r_sex = data.get('sex')
+
     if Profile.objects.filter(username=r_username):
         user = Profile.objects.get(username=r_username)
+        user.nickname = r_nickname
+        user.email = r_email
+        user.pic = r_pic
+        user.sex = r_sex
+        user.save()
+
         user.backend = 'django.contrib.auth.backends.ModelBackend'
         login(request, user)
     else:
-        r_email = data.get('email')
-        r_password = 'abcdefghijklmnopqrstuvwxyz'
-        r_nickname = data.get('nickname')
 
+        r_password = 'abcdefghijklmnopqrstuvwxyz'
         # create_user(username, email=None, password=None, **extra_fields)
         new_user = Profile.objects.create_user(
             username=r_username,
@@ -123,8 +132,8 @@ def qq_login(request, data):
             password=r_password,
         )
         new_user.nickname = r_nickname
-        new_user.pic = data.get('pic')
-        new_user.sex = data.get('sex')
+        new_user.pic = r_pic
+        new_user.sex = r_sex
         new_user.third = 'qq'
 
         new_user.save()
