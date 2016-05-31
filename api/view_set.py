@@ -8,7 +8,7 @@ class ArticleCategoriesViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = ArticleCategory.objects.all()
+    queryset = ArticleCategory.objects.all().exclude(url='aabbccddmv')
     serializer_class = ArticleCategoriesSerializer
 
     lookup_field = 'url'
