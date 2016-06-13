@@ -65,6 +65,7 @@ THIRD_APPS = (
     'rest_framework',
     'corsheaders',
     'django_markdown',
+    'django_mysql',
 )
 
 INSTALLED_APPS = DEFAULT_APPS + LOCAL_APPS + THIRD_APPS
