@@ -170,14 +170,15 @@ if IS_LOCAL:
     SESSION_COOKIE_DOMAIN = 'localhost'
     CSRF_COOKIE_DOMAIN = 'localhost'
 
-CORS_ORIGIN_WHITELIST = (
-    'local.darlin.me',
-    'darlin.me',
-    'www.darlin.me',
-    'spider.darlin.me',
-    'new.darlin.me',
-    'http.darlin.me',
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'local.darlin.me',
+#     'darlin.me',
+#     'www.darlin.me',
+#     'spider.darlin.me',
+#     'new.darlin.me',
+#     'http.darlin.me',
+# )
+CORS_ORIGIN_REGEX_WHITELIST = ('^(https?://)?(\w+\.)?darlin\.me$', )
 
 AUTH_USER_MODEL = 'account.Profile'
 
