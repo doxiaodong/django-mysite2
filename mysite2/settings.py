@@ -160,7 +160,7 @@ MEDIA_URL = '/media/'
 REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
-    'PAGE_SIZE': 50
+    'PAGE_SIZE': 20
 }
 
 SESSION_COOKIE_DOMAIN = '.darlin.me'
