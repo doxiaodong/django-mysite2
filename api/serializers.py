@@ -50,7 +50,7 @@ class CommentsUserSeralizer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('username', 'nickname', 'pic')
+        fields = ('username', 'nickname', 'pic', 'email')
 
 
 class CommentsSerializer(serializers.HyperlinkedModelSerializer):
