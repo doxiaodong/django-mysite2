@@ -12,7 +12,7 @@ class Profile(AbstractUser):
     nickname = models.CharField("昵称", max_length=255, default='darlin')
     sex = models.IntegerField('性别', default=0)
     # pic = models.ImageField('头像', upload_to='user/', default='user/favicon.png')
-    pic = models.CharField("头像", max_length=255, default='static/assets/images/head/head.png')
+    pic = models.CharField("头像", max_length=255, default='none')
 
     # third = models.CharField("第三方", max_length=255, blank=True, null=True)
 
