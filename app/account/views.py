@@ -11,6 +11,7 @@ import hashlib
 from django.conf import settings
 from qiniu import Auth
 from qiniu import put_data
+import oss2
 
 from api.views import get_user_info
 
@@ -137,15 +138,25 @@ def setting(request):
 
             s_user = Profile.objects.get(username=request.user.username)
 
+            # if s_pic:
+            #     m.update(s_pic.name)
+            #     pic_name_md5 = m.hexdigest()
+            #     q = Auth(settings.QINIU_ACCESS_KEY, settings.QINIU_SECRET_KEY)
+            #     key = settings.QINIU_MEDIA_SRC + 'user/' + s_user.username + '/' + pic_name_md5
+            #     data = s_pic
+            #     token = q.upload_token(settings.QINIU_BUCKET_DEFAULT)
+            #     ret, info = put_data(token, key, data, mime_type=s_pic.content_type)
+            #     s_user.pic = ret['key']
+
             if s_pic:
                 m.update(s_pic.name)
                 pic_name_md5 = m.hexdigest()
-                q = Auth(settings.QINIU_ACCESS_KEY, settings.QINIU_SECRET_KEY)
-                key = settings.QINIU_MEDIA_SRC + 'user/' + s_user.username + '/' + pic_name_md5
-                data = s_pic
-                token = q.upload_token(settings.QINIU_BUCKET_DEFAULT)
-                ret, info = put_data(token, key, data, mime_type=s_pic.content_type)
-                s_user.pic = ret['key']
+                auth = oss2.Auth(settings.ALIYUN_KEY_ID, settings.ALIYUN_KEY_SECRET)
+                bucket = oss2.Bucket(auth, settings.ALIYUN_BUCKET_ENDPOIONTS, settings.ALIYUN_BUCKET)
+                key = settings.ALIYUN_MEDIA_SRC + 'user/' + s_user.username + '/' + pic_name_md5
+                bucket.put_object(key, s_pic)
+                s_user.pic = key
+
             if s_username:
                 s_user.username = s_username
             if s_email:
