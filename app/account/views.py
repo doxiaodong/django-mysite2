@@ -154,7 +154,9 @@ def setting(request):
                 auth = oss2.Auth(settings.ALIYUN_KEY_ID, settings.ALIYUN_KEY_SECRET)
                 bucket = oss2.Bucket(auth, settings.ALIYUN_BUCKET_ENDPOIONTS, settings.ALIYUN_BUCKET)
                 key = settings.ALIYUN_MEDIA_SRC + 'user/' + s_user.username + '/' + pic_name_md5
-                bucket.put_object(key, s_pic)
+                bucket.put_object(key, s_pic, {
+                  'Content-Type': s_pic.content_type
+                })
                 s_user.pic = key
 
             if s_username:
