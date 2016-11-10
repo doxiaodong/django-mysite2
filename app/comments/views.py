@@ -9,6 +9,7 @@ from django.core import serializers as core_serializers
 from ..account.models import Profile
 from ..article.models import Article
 from .models import Comment, SubComment
+import uuid
 
 
 # Create your views here.
@@ -26,7 +27,7 @@ def add_reply(request, article):
                 return JsonResponse(respose)
 
             else:
-                url = timezone.now().strftime('%Y%m%d%H%M%S')
+                url = str(uuid.uuid1())
                 reply_time = timezone.now()
                 user = Profile.objects.get(username=request.user.username)
                 article = Article.objects.get(url=article)
