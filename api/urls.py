@@ -14,10 +14,10 @@ router.register(r'links', view_set.LinkViewSet)
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^initHomePage/$', views.init_homepage),
-    url(r'^article/articles/(?P<category>\w+)/$', views.ArticleListDetailView.as_view()),
-    url(r'^comment/comments/(?P<article>\w+)/$', views.CommentsDetailView.as_view()),
-    url(r'^comment/subcomments/(?P<head>\w+)/$', views.SubCommentsDetailView.as_view()),
-    url(r'^account/subcomments/(?P<user>\w+)/$', views.AccountSubCommentsDetailView.as_view()),
+    url(r'^article/articles/(?P<category>[-\w]+)/$', views.ArticleListDetailView.as_view()),
+    url(r'^comment/comments/(?P<article>[-\w]+)/$', views.CommentsDetailView.as_view()),
+    url(r'^comment/subcomments/(?P<head>[-\w]+)/$', views.SubCommentsDetailView.as_view()),
+    url(r'^account/subcomments/(?P<user>[-\w]+)/$', views.AccountSubCommentsDetailView.as_view()),
 
     url(r'^account/', include('app.account.urls', namespace='account')),
     url(r'^comments/', include('app.comments.urls', namespace='comments')),
