@@ -5,7 +5,7 @@ from django.http import JsonResponse, HttpResponseNotAllowed
 from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
 from ..account.models import Profile
 import hashlib
 from django.conf import settings
@@ -21,7 +21,7 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 # Create your views here.
-@csrf_exempt
+# @csrf_exempt
 def register(request):
     if request.method == "POST":
         post_data = request.POST
@@ -62,7 +62,7 @@ def register(request):
             return JsonResponse(respose)
 
 
-@csrf_exempt
+# @csrf_exempt
 def signin(request):
     if request.method == "POST":
         post_data = request.POST
@@ -88,7 +88,7 @@ def signin(request):
 
 
 @ensure_csrf_cookie
-@csrf_exempt
+# @csrf_exempt
 def signout(request):
     if request.method == "POST":
         logout(request)
@@ -96,7 +96,7 @@ def signout(request):
         return JsonResponse(respose)
 
 
-@csrf_exempt
+# @csrf_exempt
 def get_user(request):
     if request.method == "POST":
         post_data = request.POST
@@ -118,7 +118,7 @@ def get_user(request):
         return JsonResponse(respose)
 
 
-@csrf_exempt
+# @csrf_exempt
 def setting(request):
     if request.method == "POST":
         post_data = request.POST
@@ -177,7 +177,7 @@ def setting(request):
             return JsonResponse(respose)
 
 
-@csrf_exempt
+# @csrf_exempt
 def change(request):
     if request.method == "POST":
         post_data = request.POST
@@ -208,7 +208,7 @@ def change(request):
             return JsonResponse(respose)
 
 
-@csrf_exempt
+# @csrf_exempt
 def reset(request):
     if request.method == "POST":
         if request.user.id == 1:
