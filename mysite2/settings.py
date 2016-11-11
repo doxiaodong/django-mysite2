@@ -31,7 +31,7 @@ hostname = socket.gethostname()
 if hostname == 'iZ94zbdp1q5Z':
     IS_LOCAL = False
     USER_SESSION_EXPIRE = 10 * 60
-    DEBUG = False
+    DEBUG = True
     EMPLATE_DEBUG = False
 else:
     IS_LOCAL = True
