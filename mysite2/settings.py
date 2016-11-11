@@ -32,12 +32,10 @@ if hostname == 'iZ94zbdp1q5Z':
     IS_LOCAL = False
     USER_SESSION_EXPIRE = 10 * 60
     DEBUG = True
-    EMPLATE_DEBUG = False
 else:
     IS_LOCAL = True
     USER_SESSION_EXPIRE = None
     DEBUG = True
-    TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -61,7 +59,6 @@ LOCAL_APPS = (
 )
 
 THIRD_APPS = (
-    'DjangoUeditor',
     'rest_framework',
     'corsheaders',
     'django_markdown',
