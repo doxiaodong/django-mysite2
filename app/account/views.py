@@ -15,6 +15,8 @@ import oss2
 
 from api.views import get_user_info
 
+from app.code import errorResponse
+
 import sys
 
 reload(sys)
@@ -28,9 +30,9 @@ def register(request):
 
         r_username = post_data.get('username', None)
         if Profile.objects.filter(username=r_username):
-            return JsonResponse({'status': 0, 'msg': '用户名已经存在', 'data': {}})
+            return errorResponse('USER_IS_EXIST')
         elif r_username[0] == '_':
-            return JsonResponse({'status': 0, 'msg': '用户名不能以「_」开始', 'data': {}})
+            return errorResponse('INVALID_USERNAME')
         else:
             r_email = post_data.get('email', None)
             r_password = post_data.get('password', None)
@@ -53,11 +55,7 @@ def register(request):
             i_user = authenticate(username=r_username, password=r_password)
             login(request, i_user)
             respose = {
-                'status': 1,
-                'msg': '注册成功',
-                'data': {
-                    'user': get_user_info(i_user)
-                }
+                'user': get_user_info(i_user)
             }
             return JsonResponse(respose)
 
@@ -73,18 +71,13 @@ def signin(request):
             if user.is_active:
                 login(request, user)
                 respose = {
-                    'status': 1,
-                    'msg': '登录成功',
-                    'data': {
-                        'user': get_user_info(user)
-                    }
+                    'user': get_user_info(user)
                 }
                 return JsonResponse(respose)
             else:
                 pass
         else:
-            respose = {'status': 0, 'msg': '用户名或密码错误', 'data': {}}
-            return JsonResponse(respose)
+            return errorResponse('INVALID_USERNAME_OR_PASSWORD')
 
 
 @ensure_csrf_cookie
@@ -92,8 +85,7 @@ def signin(request):
 def signout(request):
     if request.method == "POST":
         logout(request)
-        respose = {'status': 1, 'msg': '注销成功', 'data': {}}
-        return JsonResponse(respose)
+        return JsonResponse({})
 
 
 # @csrf_exempt
@@ -102,20 +94,12 @@ def get_user(request):
         post_data = request.POST
         user = Profile.objects.get(username=post_data.get('username', None))
         if user:
-            respose = {
-                'status': 1,
-                'msg': '获取用户信息成功',
-                'data': {
-                    'user': get_user_info(user)
-                }
-            }
+            respose = JsonResponse({
+                'user': get_user_info(user)
+            })
         else:
-            respose = {
-                'status': 0,
-                'msg': '用户不存在',
-                'data': {}
-            }
-        return JsonResponse(respose)
+            respose = errorResponse('USER_IS_NOT_EXIST')
+        return respose
 
 
 # @csrf_exempt
@@ -127,9 +111,9 @@ def setting(request):
         s_username = post_data.get('username', None)
 
         if s_username != request.user.username and Profile.objects.filter(username=s_username):
-            return JsonResponse({'status': 0, 'msg': '用户名已经存在', 'data': {}})
+            return errorResponse('USER_IS_EXIST')
         if s_username != request.user.username and request.user.third != 'none':
-            return JsonResponse({'status': 0, 'msg': '第三方账号不允许修改用户名', 'data': {}})
+            return errorResponse('CANNOT_MODIFY_THIRD')
         else:
             s_email = post_data.get('email', None)
             s_nickname = post_data.get('nickname', None)
@@ -169,12 +153,7 @@ def setting(request):
 
             s_user.save()
 
-            respose = {
-                'status': 1,
-                'msg': '修改成功',
-                'data': {}
-            }
-            return JsonResponse(respose)
+            return JsonResponse({})
 
 
 # @csrf_exempt
@@ -193,19 +172,13 @@ def change(request):
                 user.save()
                 login(request, user)
                 respose = {
-                    'status': 1,
-                    'msg': '修改密码成功',
-                    'data': {
-                        'user': get_user_info(user)
-                    }
+                    'user': get_user_info(user)
                 }
                 return JsonResponse(respose)
             else:
-                respose = {'status': 0, 'msg': '用户未被激活', 'data': {}}
-                return JsonResponse(respose)
+                return errorResponse('USER_IS_NOT_ACTIVED')
         else:
-            respose = {'status': 0, 'msg': '用户名或密码错误', 'data': {}}
-            return JsonResponse(respose)
+            return errorResponse('INVALID_USERNAME_OR_PASSWORD')
 
 
 # @csrf_exempt
@@ -220,16 +193,10 @@ def reset(request):
                 user.set_password(password2)
                 user.save()
                 respose = {
-                    'status': 1,
-                    'msg': '重置密码成功',
-                    'data': {
-                        'user': username
-                    }
+                    'user': username
                 }
                 return JsonResponse(respose)
             else:
-                respose = {'status': 0, 'msg': '用户名不存在', 'data': {}}
-                return JsonResponse(respose)
+                return errorResponse('USER_IS_NOT_EXIST')
         else:
-            respose = {'status': 0, 'msg': '没有权限', 'data': {}}
-            return JsonResponse(respose)
+            return errorResponse('NOT_ALLOWED')

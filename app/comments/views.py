@@ -10,6 +10,7 @@ from ..account.models import Profile
 from ..article.models import Article
 from .models import Comment, SubComment
 import uuid
+from app.code import errorResponse
 
 
 # Create your views here.
@@ -23,8 +24,7 @@ def add_reply(request, article):
         if request.user.username:
 
             if content == '':
-                respose = {'status': 0, 'msg': '回复不能为空', 'data': {}}
-                return JsonResponse(respose)
+                return errorResponse('NOT_ALLOWED_NULL_REPLY')
 
             else:
                 url = str(uuid.uuid1())
@@ -43,25 +43,20 @@ def add_reply(request, article):
 
                 comment.save()
                 respose = {
-                    'status': 1,
-                    'msg': '评论成功',
-                    'data': {
-                        'comment': {
-                            'replyUser': {
-                                'pic': str(comment.reply_user.pic),
-                                'username': comment.reply_user.username,
-                                'nickname': comment.reply_user.nickname
-                            },
-                            'content': comment.content,
-                            'time': comment.reply_time,
-                            'url': comment.url
-                        }
+                    'comment': {
+                        'replyUser': {
+                            'pic': str(comment.reply_user.pic),
+                            'username': comment.reply_user.username,
+                            'nickname': comment.reply_user.nickname
+                        },
+                        'content': comment.content,
+                        'time': comment.reply_time,
+                        'url': comment.url
                     }
                 }
                 return JsonResponse(respose)
         else:
-            respose = {'status': 0, 'msg': '请先登录！', 'data': {'not_login': True}}
-            return JsonResponse(respose)
+            return errorResponse('LOGIN_FIRST')
 
 
 # @csrf_exempt
@@ -75,8 +70,7 @@ def add_sub_reply(request, head):
         if request.user.username:
 
             if content == '' or reply_object_str == '':
-                respose = {'status': 0, 'msg': '回复或回复对象不能为空', 'data': {}}
-                return JsonResponse(respose)
+                return errorResponse('NOT_ALLOWED_NULL_REPLY')
             else:
                 reply_time = timezone.now()
                 user = Profile.objects.get(username=request.user)
@@ -94,27 +88,22 @@ def add_sub_reply(request, head):
                     print(err)
                 sub_comment.save()
                 respose = {
-                    'status': 1,
-                    'msg': '回复成功',
-                    'data': {
-                        'subComment': {
-                            'replyUser': {
-                                'pic': str(sub_comment.reply_user.pic),
-                                'username': sub_comment.reply_user.username,
-                                'nickname': sub_comment.reply_user.nickname
-                            },
-                            'replyObject': {
-                                'pic': str(sub_comment.reply_object.pic),
-                                'username': sub_comment.reply_object.username,
-                                'nickname': sub_comment.reply_object.nickname
-                            },
-                            'content': sub_comment.content,
-                            'time': sub_comment.reply_time
-                        }
+                    'subComment': {
+                        'replyUser': {
+                            'pic': str(sub_comment.reply_user.pic),
+                            'username': sub_comment.reply_user.username,
+                            'nickname': sub_comment.reply_user.nickname
+                        },
+                        'replyObject': {
+                            'pic': str(sub_comment.reply_object.pic),
+                            'username': sub_comment.reply_object.username,
+                            'nickname': sub_comment.reply_object.nickname
+                        },
+                        'content': sub_comment.content,
+                        'time': sub_comment.reply_time
                     }
                 }
                 return JsonResponse(respose)
 
         else:
-            respose = {'status': 0, 'msg': '请先登录！', 'data': {'not_login': True}}
-            return JsonResponse(respose)
+            return errorResponse('LOGIN_FIRST')
