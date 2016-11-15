@@ -14,13 +14,9 @@ def article_category(request):
         article_categories = ArticleCategory.objects.all()
 
         respose = {
-            'status': 1,
-            'msg': '请求成功',
-            'data': {
-                'article_categories': simplejson.loads(
-                    serializers.serialize('json', article_categories, ensure_ascii=False)
-                )
-            }
+            'article_categories': simplejson.loads(
+                serializers.serialize('json', article_categories, ensure_ascii=False)
+            )
         }
         return JsonResponse(respose)
 

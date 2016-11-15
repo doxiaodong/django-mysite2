@@ -39,11 +39,7 @@ def init_homepage(request):
         else:
             info = get_user_info(user)
         respose = JsonResponse({
-            'status': 1,
-            'msg': 'success',
-            'data': {
-                'user': info
-            }
+            'user': info
         })
         return respose
 
