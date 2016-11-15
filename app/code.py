@@ -48,7 +48,7 @@ Code = {
   
 }
 
-def errorResponse(key, code):
+def errorResponse(key, code=None):
 	res = Code[key]
 	if res == None:
 		return JsonResponse({
@@ -58,4 +58,4 @@ def errorResponse(key, code):
 	if code == None:
 		code = res['code']/1000
 
-	return JsonResponse(res, code)
+	return JsonResponse(res, status=code)
