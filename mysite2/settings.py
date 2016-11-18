@@ -16,6 +16,8 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+from corsheaders.defaults import default_methods
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -176,6 +178,10 @@ if IS_LOCAL:
 #     'http.darlin.me',
 # )
 CORS_ORIGIN_REGEX_WHITELIST = ('^(https?://)?(\w+\.)?darlin\.me$', )
+
+CORS_ALLOW_METHODS = default_methods + (
+    'x-aestoken',
+)
 
 AUTH_USER_MODEL = 'account.Profile'
 
