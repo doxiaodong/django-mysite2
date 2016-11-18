@@ -16,6 +16,7 @@ import oss2
 from api.views import get_user_info
 
 from app.code import errorResponse
+from app.decrypt import decrypt_password
 
 import sys
 
@@ -36,6 +37,7 @@ def register(request):
         else:
             r_email = post_data.get('email', None)
             r_password = post_data.get('password', None)
+            r_password = decrypt_password(r_password, request.META.get('HTTP_X_AESTOKEN'))
             r_nickname = post_data.get('nickname', None)
 
             # create_user(username, email=None, password=None, **extra_fields)
@@ -66,6 +68,7 @@ def signin(request):
         post_data = request.POST
         username = post_data.get('username', None)
         password = post_data.get('password', None)
+        password = decrypt_password(password, request.META.get('HTTP_X_AESTOKEN'))
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
@@ -165,6 +168,10 @@ def change(request):
         password2 = post_data.get('new_password', None)
         if password1 == '':
             password1 = 'abcdefghijklmnopqrstuvwxyz'
+        else:
+            password1 = decrypt_password(password1, request.META.get('HTTP_X_AESTOKEN'))
+        password2 = decrypt_password(password2, request.META.get('HTTP_X_AESTOKEN'))
+
         user = authenticate(username=username, password=password1)
         if user is not None:
             if user.is_active:
@@ -188,6 +195,7 @@ def reset(request):
             post_data = request.POST
             username = post_data.get('username', None)
             password2 = post_data.get('new_password', None)
+            password2 = decrypt_password(password2, request.META.get('HTTP_X_AESTOKEN'))
             user = Profile.objects.get(username=username)
             if user is not None:
                 user.set_password(password2)
