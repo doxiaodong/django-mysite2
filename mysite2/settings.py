@@ -25,7 +25,6 @@ SECRET_KEY = '&zpmk=@&vz!a(y0e$v#@sczt^pisebm@82mzyhyg&g@!vldf)o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-from corsheaders.defaults import default_methods
 import socket
 hostname = socket.gethostname()
 if hostname == 'iZ94zbdp1q5Z':
@@ -177,7 +176,15 @@ if IS_LOCAL:
 # )
 CORS_ORIGIN_REGEX_WHITELIST = ('^(https?://)?(\w+\.)?darlin\.me$', )
 
-CORS_ALLOW_HEADERS = default_methods + (
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'user-agent',
+    'accept-encoding',
     'x-aestoken',
 )
 
