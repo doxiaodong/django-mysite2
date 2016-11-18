@@ -16,8 +16,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-from corsheaders.defaults import default_methods
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -27,7 +25,7 @@ SECRET_KEY = '&zpmk=@&vz!a(y0e$v#@sczt^pisebm@82mzyhyg&g@!vldf)o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
+from corsheaders.defaults import default_methods
 import socket
 hostname = socket.gethostname()
 if hostname == 'iZ94zbdp1q5Z':
