@@ -25,6 +25,7 @@ SECRET_KEY = '&zpmk=@&vz!a(y0e$v#@sczt^pisebm@82mzyhyg&g@!vldf)o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+from corsheaders.defaults import default_methods
 import socket
 hostname = socket.gethostname()
 if hostname == 'iZ94zbdp1q5Z':
