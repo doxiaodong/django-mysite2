@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^comments/', include('app.comments.urls', namespace='comments')),
     
     url(r'^third/', include('app.third.urls', namespace='third')),
+    url(r'^music/', include('app.music.urls', namespace='music')),
 ]
