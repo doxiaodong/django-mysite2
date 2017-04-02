@@ -1,7 +1,7 @@
 # coding:utf-8
 import datetime
 from django.utils import timezone
-from DjangoUeditor.models import UEditorField
+# from DjangoUeditor.models import UEditorField
 from django_markdown.models import MarkdownField
 from django.db import models
 

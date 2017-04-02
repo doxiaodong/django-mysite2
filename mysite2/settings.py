@@ -27,7 +27,7 @@ SECRET_KEY = '&zpmk=@&vz!a(y0e$v#@sczt^pisebm@82mzyhyg&g@!vldf)o'
 DEBUG = False
 import socket
 hostname = socket.gethostname()
-if hostname == 'iZ94zbdp1q5Z':
+if hostname != 'darlin.local':
     IS_LOCAL = False
     USER_SESSION_EXPIRE = 10 * 60
     DEBUG = False
