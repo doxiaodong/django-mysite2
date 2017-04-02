@@ -61,7 +61,7 @@ THIRD_APPS = (
     'rest_framework',
     'corsheaders',
     'django_markdown',
-    # 'django_mysql',
+    'django_mysql',
 )
 
 INSTALLED_APPS = DEFAULT_APPS + LOCAL_APPS + THIRD_APPS
@@ -120,9 +120,9 @@ else:
             'NAME': 'api',
             'USER': 'root',
             'PASSWORD': 'Shiwei122',
-            'HOST': '',
+            'HOST': '127.0.0.1',
             'CHARSET': 'utf8',
-            'PORT': '',
+            'PORT': '3306',
         }
     }
 
