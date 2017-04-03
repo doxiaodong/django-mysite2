@@ -122,7 +122,7 @@ else:
             'PASSWORD': 'Shiwei122',
             'HOST': '127.0.0.1',
             'CHARSET': 'utf8',
-            'PORT': '3306',
+            'PORT': '3006',
         }
     }
 
