@@ -120,9 +120,9 @@ else:
             'NAME': 'api',
             'USER': 'root',
             'PASSWORD': 'Shiwei122',
-            'HOST': '127.0.0.1',
+            'HOST': 'mysql.darlin.me',
             'CHARSET': 'utf8',
-            'PORT': '3006',
+            'PORT': '80',
         }
     }
 
