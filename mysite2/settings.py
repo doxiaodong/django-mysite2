@@ -120,7 +120,7 @@ else:
             'NAME': 'api',
             'USER': 'root',
             'PASSWORD': 'Shiwei122',
-            'HOST': '192.168.31.160',
+            'HOST': '172.17.0.1',
             'CHARSET': 'utf8',
             'PORT': '3306',
         }

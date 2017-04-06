@@ -26,6 +26,7 @@ class Article(models.Model):
     content = MarkdownField()
     create_time = models.DateTimeField("发布时间")
     pic = models.ImageField("图片", null=True, blank=True, upload_to='article/')
+    pic = max_length=255, default='')
     hot = models.BooleanField("热门")
     is_up = models.BooleanField("置顶")
 
