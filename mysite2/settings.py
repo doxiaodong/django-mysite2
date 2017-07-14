@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from readJson import readJson
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -115,15 +116,16 @@ if IS_LOCAL:
         }
     }
 else:
+    MYSQL = readJson('./config/mysql/api.json')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'api',
-            'USER': 'root',
-            'PASSWORD': 'Shiwei122',
-            'HOST': '172.17.0.1',
+            'NAME': MYSQL.get('NAME'),
+            'USER': MYSQL.get('USER'),
+            'PASSWORD': MYSQL.get('PASSWORD'),
+            'HOST': MYSQL.get('HOST'),
             'CHARSET': 'utf8',
-            'PORT': '3306',
+            'PORT': MYSQL.get('PORT'),
         }
     }
 
@@ -191,24 +193,28 @@ CORS_ALLOW_HEADERS = (
 
 AUTH_USER_MODEL = 'account.Profile'
 
-QINIU_ACCESS_KEY = 'RR8xxStViBpzNJ4pQjD1sBZH3JsWN-ou-LR1D_iT'
-QINIU_SECRET_KEY = '9oxjA6WIOGBRqUYnyVgrGzp4kEWbTzQ-lcW9Ear7'
+QINIU = readJson('./config/qiniu.json')
+QINIU_ACCESS_KEY = QINIU.get('ACCESS_KEY')
+QINIU_SECRET_KEY = QINIU.get('SECRET_KEY')
 QINIU_BUCKET_DEFAULT = 'qiniu-darlin-me'
 QINIU_MEDIA_SRC = 'media/'
 
-ALIYUN_KEY_ID = 'LTAIU6zaxUBGeayM'
-ALIYUN_KEY_SECRET = 'o44wa1CilHPldl8XHDS7ymxVzt3kxl'
+ALIYUN = readJson('./config/aliyun.json')
+ALIYUN_KEY_ID = ALIYUN.get('KEY_ID')
+ALIYUN_KEY_SECRET = ALIYUN.get('KEY_SECRET')
 ALIYUN_BUCKET_ENDPOIONTS = 'http://oss-cn-shanghai.aliyuncs.com'
 ALIYUN_BUCKET = 'darlin-me'
 ALIYUN_MEDIA_SRC = 'media/'
 
+GITHUB = readJson('./config/github.json')
 GITHUB_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
-GITHUB_CLIENT_ID = 'c3b1f0c02a459943fbef'
-GITHUB_CLIENT_SECRET = '63000036a72e6ac9e9a4bd39674b4caa9f134aa4'
+GITHUB_CLIENT_ID = GITHUB.get('CLIENT_ID')
+GITHUB_CLIENT_SECRET = GITHUB.get('CLIENT_SECRET')
 GITHUB_CALLBACK = 'http://darlin.me'
 
+QQ = readJson('./config/qq.json')
 QQ_AUTHORIZE_URL = 'https://graph.qq.com/oauth2.0/authorize'
-QQ_CLIENT_ID = 101322546
-QQ_CLIENT_SECRET = 'fda5515f98e536c2a28cd7706236b57a'
+QQ_CLIENT_ID = QQ.get('CLIENT_ID')
+QQ_CLIENT_SECRET = QQ.get('CLIENT_SECRET')
 
 API_URL = ''
