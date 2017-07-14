@@ -206,13 +206,13 @@ ALIYUN_BUCKET_ENDPOIONTS = 'http://oss-cn-shanghai.aliyuncs.com'
 ALIYUN_BUCKET = 'darlin-me'
 ALIYUN_MEDIA_SRC = 'media/'
 
-GITHUB = readJson('./config/github.json')
+GITHUB = readJson('./config/github/darlin.me.json')
 GITHUB_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
 GITHUB_CLIENT_ID = GITHUB.get('CLIENT_ID')
 GITHUB_CLIENT_SECRET = GITHUB.get('CLIENT_SECRET')
 GITHUB_CALLBACK = 'http://darlin.me'
 
-QQ = readJson('./config/qq.json')
+QQ = readJson('./config/qq/darlin.me.json')
 QQ_AUTHORIZE_URL = 'https://graph.qq.com/oauth2.0/authorize'
 QQ_CLIENT_ID = QQ.get('CLIENT_ID')
 QQ_CLIENT_SECRET = QQ.get('CLIENT_SECRET')
