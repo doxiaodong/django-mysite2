@@ -124,7 +124,7 @@ else:
             'USER': MYSQL.get('USER'),
             'PASSWORD': MYSQL.get('PASSWORD'),
             'HOST': MYSQL.get('HOST'),
-            'CHARSET': 'utf8',
+            'CHARSET': 'utf8mb4',
             'PORT': MYSQL.get('PORT'),
         }
     }
