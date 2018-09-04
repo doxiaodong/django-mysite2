@@ -45,7 +45,11 @@ Code = {
 		'code': 401001,
 		'en': 'login first'
 	},
-  
+
+	'SERVER_ERROR': {
+		'code': 50001,
+		'en': 'server error'
+	},
 }
 
 def errorResponse(key, code=None):
@@ -54,7 +58,7 @@ def errorResponse(key, code=None):
 		return JsonResponse({
 			'error': 'error is not defined, check backend'
 		}, status=500)
-    
+
 	if code == None:
 		code = res['code']/1000
 

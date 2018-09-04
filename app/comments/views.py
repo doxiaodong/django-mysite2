@@ -40,6 +40,7 @@ def add_reply(request, article):
                                       reply_time=reply_time)
                 except Exception as err:
                     print(err)
+                    return errorResponse('SERVER_ERROR')
 
                 comment.save()
                 respose = {
@@ -86,6 +87,7 @@ def add_sub_reply(request, head):
                                              reply_time=reply_time)
                 except Exception as err:
                     print(err)
+                    return errorResponse('SERVER_ERROR')
                 sub_comment.save()
                 respose = {
                     'subComment': {
