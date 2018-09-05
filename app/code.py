@@ -1,4 +1,5 @@
-from django.http import JsonResponse
+import uuid
+from django.http import JsonResponse as json_response, HttpResponse as http_response
 
 Code = {
 	'USER_IS_EXIST': {
@@ -51,6 +52,19 @@ Code = {
 		'en': 'server error'
 	},
 }
+
+def gen_traceid():
+	return uuid.uuid4()
+
+def HttpResponse(**kwargs):
+	ret = http_response(**kwargs)
+	ret['traceid'] = gen_traceid()
+	return ret
+
+def JsonResponse(**kwargs):
+	ret = json_response(**kwargs)
+	ret['traceid'] = gen_traceid()
+	return ret
 
 def errorResponse(key, code=None):
 	res = Code[key]

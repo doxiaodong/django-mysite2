@@ -1,7 +1,8 @@
 # coding:utf-8
 
 from django.views.decorators.csrf import ensure_csrf_cookie, get_token
-from django.http import JsonResponse, HttpResponse
+# from django.http import JsonResponse, HttpResponse
+from app.code import JsonResponse
 import simplejson
 import json
 from django.core import serializers as core_serializers
@@ -38,10 +39,10 @@ def init_homepage(request):
             info = None
         else:
             info = get_user_info(user)
-        respose = JsonResponse({
+        response = JsonResponse({
             'user': info
         })
-        return respose
+        return response
 
 
 class ArticleListDetailView(generics.ListAPIView):

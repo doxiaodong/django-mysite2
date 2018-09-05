@@ -3,7 +3,7 @@
 import urllib
 import json
 import requests
-from django.http import HttpResponseRedirect, JsonResponse, HttpResponseNotAllowed
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from ..account.models import Profile
 

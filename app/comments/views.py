@@ -1,6 +1,7 @@
 # coding:utf-8
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseNotAllowed
+# from django.http import JsonResponse, HttpResponseNotAllowed
+from app.code import JsonResponse
 # from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 import simplejson
@@ -43,7 +44,7 @@ def add_reply(request, article):
                     return errorResponse('SERVER_ERROR')
 
                 comment.save()
-                respose = {
+                response = {
                     'comment': {
                         'replyUser': {
                             'pic': str(comment.reply_user.pic),
@@ -55,7 +56,7 @@ def add_reply(request, article):
                         'url': comment.url
                     }
                 }
-                return JsonResponse(respose)
+                return JsonResponse(response)
         else:
             return errorResponse('LOGIN_FIRST')
 
@@ -89,7 +90,7 @@ def add_sub_reply(request, head):
                     print(err)
                     return errorResponse('SERVER_ERROR')
                 sub_comment.save()
-                respose = {
+                response = {
                     'subComment': {
                         'replyUser': {
                             'pic': str(sub_comment.reply_user.pic),
@@ -105,7 +106,7 @@ def add_sub_reply(request, head):
                         'time': sub_comment.reply_time
                     }
                 }
-                return JsonResponse(respose)
+                return JsonResponse(response)
 
         else:
             return errorResponse('LOGIN_FIRST')

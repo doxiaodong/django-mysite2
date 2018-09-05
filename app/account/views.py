@@ -1,7 +1,8 @@
 # coding:utf-8
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.http import JsonResponse, HttpResponseNotAllowed
+# from django.http import JsonResponse, HttpResponseNotAllowed
+from app.code import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -56,10 +57,10 @@ def register(request):
 
             i_user = authenticate(username=r_username, password=r_password)
             login(request, i_user)
-            respose = {
+            response = {
                 'user': get_user_info(i_user)
             }
-            return JsonResponse(respose)
+            return JsonResponse(response)
 
 
 # @csrf_exempt
@@ -73,10 +74,10 @@ def signin(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                respose = {
+                response = {
                     'user': get_user_info(user)
                 }
-                return JsonResponse(respose)
+                return JsonResponse(response)
             else:
                 pass
         else:
@@ -97,12 +98,12 @@ def get_user(request):
         post_data = request.POST
         user = Profile.objects.get(username=post_data.get('username', None))
         if user:
-            respose = JsonResponse({
+            response = JsonResponse({
                 'user': get_user_info(user)
             })
         else:
-            respose = errorResponse('USER_IS_NOT_EXIST')
-        return respose
+            response = errorResponse('USER_IS_NOT_EXIST')
+        return response
 
 
 # @csrf_exempt
@@ -178,10 +179,10 @@ def change(request):
                 user.set_password(password2)
                 user.save()
                 login(request, user)
-                respose = {
+                response = {
                     'user': get_user_info(user)
                 }
-                return JsonResponse(respose)
+                return JsonResponse(response)
             else:
                 return errorResponse('USER_IS_NOT_ACTIVED')
         else:
@@ -200,10 +201,10 @@ def reset(request):
             if user is not None:
                 user.set_password(password2)
                 user.save()
-                respose = {
+                response = {
                     'user': username
                 }
-                return JsonResponse(respose)
+                return JsonResponse(response)
             else:
                 return errorResponse('USER_IS_NOT_EXIST')
         else:
