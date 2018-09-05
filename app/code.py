@@ -56,13 +56,13 @@ Code = {
 def gen_traceid():
 	return uuid.uuid4()
 
-def HttpResponse(**kwargs):
-	ret = http_response(**kwargs)
+def HttpResponse(data, **kwargs):
+	ret = http_response(data, **kwargs)
 	ret['traceid'] = gen_traceid()
 	return ret
 
-def JsonResponse(**kwargs):
-	ret = json_response(**kwargs)
+def JsonResponse(data, **kwargs):
+	ret = json_response(data, **kwargs)
 	ret['traceid'] = gen_traceid()
 	return ret
 
