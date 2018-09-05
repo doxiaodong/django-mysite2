@@ -1,7 +1,7 @@
 # coding:utf-8
 
 import requests
-from app.code import httpResponse
+from app.code import HttpResponse
 
 def get_lyric_by_id(request, musicid):
 	if request.method == 'GET':
@@ -16,4 +16,4 @@ def get_lyric_by_id(request, musicid):
 			# 'cookie': 'qqmusic_uin=12345678; qqmusic_key=12345678; qqmusic_fromtag=30',
 		}
 		ret = requests.get(url, params=data, headers=headers)
-		return httpResponse(ret.text, content_type ='application/javascript')
+		return HttpResponse(ret.text, content_type ='application/javascript')
