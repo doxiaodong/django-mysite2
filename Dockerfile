@@ -1,4 +1,4 @@
-FROM python:2-onbuild
+FROM python:3.6-onbuild
 WORKDIR /usr/src/app
 VOLUME /usr/src/app/config
 COPY . /usr/src/app

@@ -3,7 +3,7 @@
 import urllib
 import json
 import requests
-import urlparse
+from urllib import parse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from ..account.models import Profile
@@ -55,7 +55,7 @@ def get_access_token(request):
         data = urllib.urlencode(data)
         complete_url = url + '?' + data
         ret = requests.get(complete_url)
-        access_token = urlparse.parse_qs(ret.text)['access_token'][0]
+        access_token = parse.parse_qs(ret.text)['access_token'][0]
         return get_user_openid(request, access_token)
 
 

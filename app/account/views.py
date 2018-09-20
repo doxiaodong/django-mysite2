@@ -19,11 +19,6 @@ from api.views import get_user_info
 from app.code import errorResponse
 from app.decrypt import decrypt_password
 
-import sys
-
-reload(sys)
-sys.setdefaultencoding("utf-8")
-
 # Create your views here.
 # @csrf_exempt
 def register(request):
