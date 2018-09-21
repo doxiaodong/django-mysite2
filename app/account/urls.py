@@ -1,14 +1,15 @@
 # coding:utf-8
 
-from django.conf.urls import include, url
+from django.urls import include, path
 from . import views
 
+app_name = 'account'
 urlpatterns = [
-    url(r'^register/$', views.register, name='register'),
-    url(r'^signin/$', views.signin, name='signin'),
-    url(r'^signout/$', views.signout, name='signout'),
-    url(r'^getUserInfo/$', views.get_user, name='get_user'),
-    url(r'^setting/$', views.setting, name='setting'),
-    url(r'^change/$', views.change, name='change'),
-    url(r'^reset/$', views.reset, name='reset'),
+    path('register/', views.register, name='register'),
+    path('signin/', views.signin, name='signin'),
+    path('signout/', views.signout, name='signout'),
+    path('getUserInfo/', views.get_user, name='get_user'),
+    path('setting/', views.setting, name='setting'),
+    path('change/', views.change, name='change'),
+    path('reset/', views.reset, name='reset'),
 ]

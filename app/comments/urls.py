@@ -1,9 +1,10 @@
 # coding:utf-8
 
-from django.conf.urls import include, url
+from django.urls import include, path
 from . import views
 
+app_name = 'comments'
 urlpatterns = [
-    url(r'^add/(?P<article>[-\w]+)/$', views.add_reply, name='add_reply'),
-    url(r'^add-sub/(?P<head>[-\w]+)/$', views.add_sub_reply, name='add_sub_reply'),
+    path('add/<article>/', views.add_reply, name='add_reply'),
+    path('add-sub/<head>/', views.add_sub_reply, name='add_sub_reply'),
 ]

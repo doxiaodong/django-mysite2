@@ -35,7 +35,7 @@ def get_user_info(user):
 def init_homepage(request):
     if request.method == "GET":
         user = request.user
-        if user.is_anonymous():
+        if user.is_anonymous:
             info = None
         else:
             info = get_user_info(user)

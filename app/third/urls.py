@@ -1,9 +1,10 @@
 # coding:utf-8
-from django.conf.urls import include, url
+from django.urls import include, path
 from . import views
 from . import qq
 
+app_name = 'third'
 urlpatterns = [
-    url(r'^github/$', views.github, name='github'),
-    url(r'^qq/$', qq.login_route),
+    path('github/', views.github, name='github'),
+    path('qq/', qq.login_route),
 ]

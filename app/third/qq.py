@@ -1,6 +1,5 @@
 # coding:utf-8
 
-import urllib
 import json
 import requests
 from urllib import parse
@@ -33,7 +32,7 @@ def get_code(request):
             'redirect_uri': 'https://api.darlin.me/third/qq/?step=access_token',
             'state': 'd1f649dee27528d459001800fd88a8e9',
         }
-        data = urllib.urlencode(data)
+        data = parse.urlencode(data)
         redirect_url = url + '?' + data
         return HttpResponseRedirect(redirect_url)
 
@@ -52,7 +51,7 @@ def get_access_token(request):
             'code': code,
             'redirect_uri': 'https://api.darlin.me/third/qq/?step=user_openid',
         }
-        data = urllib.urlencode(data)
+        data = parse.urlencode(data)
         complete_url = url + '?' + data
         ret = requests.get(complete_url)
         access_token = parse.parse_qs(ret.text)['access_token'][0]
@@ -64,7 +63,7 @@ def get_user_openid(request, access_token):
     data = {
         'access_token': access_token,
     }
-    data = urllib.urlencode(data)
+    data = parse.urlencode(data)
     complete_url = url + '?' + data
     res = requests.get(complete_url)
 
@@ -86,7 +85,7 @@ def get_user(request, url_params, access_token):
         'oauth_consumer_key': ret.get('client_id'),
         'openid': ret.get('openid'),
     }
-    data = urllib.urlencode(data)
+    data = parse.urlencode(data)
     complete_url = url + '?' + data
     res = requests.get(complete_url)
     qq_user_info = json.loads(res.text)

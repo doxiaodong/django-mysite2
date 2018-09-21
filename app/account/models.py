@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class Profile(AbstractUser):
 
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=True)
     third = models.CharField("第三方", max_length=255, default='none')
     nickname = models.CharField("昵称", max_length=255, default='darlin')
     sex = models.IntegerField('性别', default=0)

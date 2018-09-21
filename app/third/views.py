@@ -1,6 +1,6 @@
 # coding:utf-8
 
-import urllib
+from urllib import parse
 import json
 import requests
 from django.http import HttpResponseRedirect
@@ -33,7 +33,7 @@ def get_code(request):
             'redirect_uri': 'https://api.darlin.me/third/github/?step=access_token',
             'state': 'd1f649dee27528d459001800fd88a8e9',
         }
-        data = urllib.urlencode(data)
+        data = parse.urlencode(data)
         redirect_url = url + '?' + data
         return HttpResponseRedirect(redirect_url)
 
@@ -51,7 +51,7 @@ def get_access_token(request):
             'code': code,
             'state': state,
         }
-        data = urllib.urlencode(data)
+        data = parse.urlencode(data)
         complete_url = url + '?' + data
         res = requests.post(complete_url)
         url_params = res.text

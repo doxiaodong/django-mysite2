@@ -1,6 +1,6 @@
 # coding:utf-8
 
-from django.conf.urls import include, url
+from django.urls import include, path
 from rest_framework import routers
 from . import views, view_set
 
@@ -11,17 +11,18 @@ router.register(r'article', view_set.ArticleViewSet)
 router.register(r'comments', view_set.AccountCommentViewSet)
 router.register(r'links', view_set.LinkViewSet)
 
+app_name = 'api'
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^initHomePage/$', views.init_homepage),
-    url(r'^article/articles/(?P<category>[-\w]+)/$', views.ArticleListDetailView.as_view()),
-    url(r'^comment/comments/(?P<article>[-\w]+)/$', views.CommentsDetailView.as_view()),
-    url(r'^comment/subcomments/(?P<head>[-\w]+)/$', views.SubCommentsDetailView.as_view()),
-    url(r'^account/subcomments/(?P<user>[-\w]+)/$', views.AccountSubCommentsDetailView.as_view()),
+    path('', include(router.urls)),
+    path('initHomePage/', views.init_homepage),
+    path('article/articles/<category>/', views.ArticleListDetailView.as_view()),
+    path('comment/comments/<article>/', views.CommentsDetailView.as_view()),
+    path('comment/subcomments/<head>/', views.SubCommentsDetailView.as_view()),
+    path('account/subcomments/<user>/', views.AccountSubCommentsDetailView.as_view()),
 
-    url(r'^account/', include('app.account.urls', namespace='account')),
-    url(r'^comments/', include('app.comments.urls', namespace='comments')),
-    
-    url(r'^third/', include('app.third.urls', namespace='third')),
-    url(r'^music/', include('app.music.urls', namespace='music')),
+    path('account/', include('app.account.urls', namespace='account')),
+    path('comments/', include('app.comments.urls', namespace='comments')),
+
+    path('third/', include('app.third.urls', namespace='third')),
+    path('music/', include('app.music.urls', namespace='music')),
 ]

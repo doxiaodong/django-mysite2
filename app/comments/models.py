@@ -10,8 +10,8 @@ from ..article.models import Article
 # Create your models here.
 class Comment(models.Model):
     url = models.CharField("评论楼层URL地址，最好用日期", max_length=100)
-    article = models.ForeignKey(Article)
-    reply_user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    article = models.ForeignKey(Article, on_delete=True)
+    reply_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=True)
     index = models.IntegerField("评论楼层，不要填写", null=True, blank=True)
     sub_comment = None
 
@@ -30,9 +30,9 @@ class Comment(models.Model):
 
 
 class SubComment(models.Model):
-    head = models.ForeignKey(Comment)
-    reply_user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    reply_object = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="reply_object", null=True, blank=True)
+    head = models.ForeignKey(Comment, on_delete=True)
+    reply_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=True)
+    reply_object = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=True, related_name="reply_object", null=True, blank=True)
 
     content = models.TextField('内容')
     reply_time = models.DateTimeField('回复时间')
