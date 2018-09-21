@@ -18,12 +18,12 @@ class ArticleCategory(models.Model):
 
 
 class Article(models.Model):
-    category = models.ForeignKey(ArticleCategory, on_delete=True)
+    category = models.ForeignKey(ArticleCategory, on_delete=models.CASCADE)
     url = models.CharField("文章URL地址", max_length=100)
     title = models.CharField("标题", max_length=255)
     # content = UEditorField("内容", "100%", 120, imagePath="images/", filePath="files/", null=True, blank=True)
-    # content = models.TextField()
-    content = MarkdownField()
+    content = models.TextField()
+    # content = MarkdownField()
     create_time = models.DateTimeField("发布时间")
     # pic = models.ImageField("图片", null=True, blank=True, upload_to='article/')
     pic = models.CharField("图片", max_length=255, default='')

@@ -68,7 +68,7 @@ class CommentsDetailView(generics.ListAPIView):
 
     def get_queryset(self):
         article = self.kwargs['article']
-        article = Article.objects.filter(url=article)
+        article = Article.objects.get(url=article)
         comments = Comment.objects.filter(article=article)
 
         index = 1
@@ -90,7 +90,7 @@ class SubCommentsDetailView(generics.ListAPIView):
 
     def get_queryset(self):
         head = self.kwargs['head']
-        head = Comment.objects.filter(url=head)
+        head = Comment.objects.get(url=head)
         sub_comments = SubComment.objects.filter(head=head)
 
         return sub_comments
@@ -101,7 +101,7 @@ class AccountSubCommentsDetailView(generics.ListAPIView):
 
     def get_queryset(self):
         reply_object = self.kwargs['user']
-        reply_object = Profile.objects.filter(username=reply_object)
+        reply_object = Profile.objects.get(username=reply_object)
         sub_comments = SubComment.objects.filter(reply_object=reply_object)
 
         return sub_comments
